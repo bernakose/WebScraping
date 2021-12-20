@@ -17,15 +17,18 @@ namespace WebScraping.Controllers
             var web = new HtmlWeb();
             var doc = web.Load("https://www.hepsiemlak.com/satilik");
 
-            foreach (var item in doc.DocumentNode.SelectNodes("//div[@class='upper sibling']"))
+            foreach (var item in doc.DocumentNode.SelectNodes("//div[@class='listing-item featuredProductsFeatureList']"))
             {
-                string title = item.ChildNodes[0].ChildNodes[0].InnerText.Trim();
+                string title = item.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].InnerText.Trim();
+                string link = "https://www.hepsiemlak.com" + item.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[0].GetAttributeValue("href","").Trim();
+                string img = item.ChildNodes[2].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[2].GetAttributeValue("src","").Trim();
                 homes.Add(new Home()
                 {
-                    title = title
+                    title = title,
+                    link=link,
+                    image=img
                 });
-            }
-            
+            }            
 
             return View(homes);
         }

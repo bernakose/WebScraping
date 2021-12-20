@@ -16,6 +16,9 @@
                 <thead>
                     <tr>
                         <th>
+                            Ev Resimleri
+                        </th>
+                        <th>
                             Ev Fiyatı
                         </th>
                         <th>
@@ -26,14 +29,17 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @item.title
-                            </td>
-                            <td>
-                                -----------
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <img src="@item.image" style="width:70px; height:70px;"/>
+                        </td>
+                        <td>
+                            @item.title
+                        </td>
+                        <td>
+                            <a href="@item.link">Detaylar</a>
+                        </td>
+                    </tr>
                     }
 
                 </tbody>

@@ -9,6 +9,6 @@ namespace WebScraping.Models
     {
         public string title { get; set; }
         public string link { get; set; }
-
+        public string image { get; set; }
     }
 }
