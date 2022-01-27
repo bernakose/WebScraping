@@ -8,6 +8,9 @@ namespace WebScraping.Models
     public class Home
     {
         public string title { get; set; }
+        public string city { get; set; }
+        public string room { get; set; }
+        public string metre { get; set; }
         public string link { get; set; }
         public string image { get; set; }
     }

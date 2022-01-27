@@ -22,6 +22,15 @@
                             Ev Fiyatı
                         </th>
                         <th>
+                            Şehir
+                        </th>
+                        <th>
+                            Oda Sayısı
+                        </th>
+                        <th>
+                            Metre<sup>2</sup>
+                        </th>
+                        <th>
                             Link
                         </th>
                     </tr>
@@ -31,10 +40,19 @@
                     {
                     <tr>
                         <td>
-                            <img src="@item.image" style="width:70px; height:70px;"/>
+                            <img src="@item.image" style="width:70px; height:70px;" />
                         </td>
                         <td>
                             @item.title
+                        </td>
+                        <td>
+                            @item.city
+                        </td>
+                        <td>
+                            @item.room
+                        </td>
+                        <td>
+                            @item.metre
                         </td>
                         <td>
                             <a href="@item.link">Detaylar</a>
