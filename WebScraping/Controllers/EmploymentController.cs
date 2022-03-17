@@ -4,45 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebScraping.Models;
+using WebScraping.Models.Siniflar;
 
 namespace WebScraping.Controllers
 {
     public class EmploymentController : Controller
     {
         // GET: Employment
-        public ActionResult Index()
+        WebScrapingDBEntities db = new WebScrapingDBEntities();
+
+        public ActionResult Index(Homes model)
         {
-            //List<Home> homes = new List<Home>();
-            //    for (int i = 1; i < 15; i++)
-            //    {            
-            //    var web = new HtmlWeb();
-            //    var doc = web.Load("https://www.hepsiemlak.com/kiralik?page="+i);
-            //        foreach (var item in doc.DocumentNode.SelectNodes("//a[@class='img-link']"))
-            //        {
-            //            // string title = item.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].InnerText.Trim();
-            //            string title = item.GetAttributeValue("title", "").Trim();
-            //            // string link = "https://www.hepsiemlak.com" + item.ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[0].GetAttributeValue("href", "").Trim();
-            //            string link = "https://www.hepsiemlak.com" + item.GetAttributeValue("href", "").Trim();
-            //            // string img = item.ChildNodes[2].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[2].GetAttributeValue("src", "").Trim();
-            //            string img = item.ChildNodes[2].GetAttributeValue("src","").Trim();
-            //            //string country = item.GetAttributeValue("","").Trim();
-            //            homes.Add(new Home()
-            //            {
-            //                title = title,
-            //                link = link,
-            //                image = img
-            //            });
-            //        }              
-
-            //    }
-            //    return View(homes);
+            List<Homes> homesAllDatas = new List<Homes>();
 
 
-
-
-            List<Home> homes = new List<Home>();
-            for (int i = 1; i < 25; i++)
+            //hepsiemlaktan çekilen veriler
+            List<Homes> homes = new List<Homes>();
+            for (int i = 2; i < 3; i++)
             {
                 var web = new HtmlWeb();
                 var doc = web.Load("https://www.hepsiemlak.com/kiralik?page=" + i);
@@ -50,27 +28,121 @@ namespace WebScraping.Controllers
                 {
                     string price = item.ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].InnerText.Trim();
                     string city = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[2].InnerText.Trim();
-                    string age = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[6].ChildNodes[0].InnerText.Trim();
-                    string floor = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[8].ChildNodes[0].InnerText.Trim();
+                    //string age = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[6].ChildNodes[0].InnerText.Trim();
+                    //string floor = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[8].ChildNodes[0].InnerText.Trim();
                     string room = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
                     string metre = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[4].ChildNodes[0].InnerText.Trim();
                     string link = "https://www.hepsiemlak.com" + item.ChildNodes[2].ChildNodes[0].ChildNodes[0].GetAttributeValue("href", "").Trim();
                     string img = item.ChildNodes[0].ChildNodes[2].ChildNodes[2].GetAttributeValue("data-src", "").Trim();
-                    homes.Add(new Home()
+                    homes.Add(new Homes()
                     {
                         price = price,
                         city = city,
                         room = room,
-                        age = age,
-                        floor=floor,
+                        age = "",
+                        floor = "",
                         metre = metre,
                         link = link,
                         image = img
                     }); ;
                 }
+            }
+
+            //sahibinden çekilen veriler        
+            List<HomesSahibinden> homesSahibinden = new List<HomesSahibinden>();
+            for (int i = 1; i < 2; i++)
+            {
+                var web = new HtmlWeb();
+                var doc = web.Load("https://www.sahibinden.com/kiralik?page=" + i);
+
+                foreach (var item in doc.DocumentNode.SelectNodes("//tr[@class='searchResultsItem     ']"))
+                {
+                    string price = item.ChildNodes[11].ChildNodes[1].InnerText.Trim();
+                    string link = "https://www.sahibinden.com/" + item.ChildNodes[1].ChildNodes[1].GetAttributeValue("href", "").Trim();
+                    string img = item.ChildNodes[1].ChildNodes[1].ChildNodes[1].GetAttributeValue("src", "").Trim();
+                    string city = item.ChildNodes[15].ChildNodes[0].InnerText.Trim();
+                    string county = item.ChildNodes[15].ChildNodes[2].InnerText.Trim();
+                    string metre = item.ChildNodes[7].ChildNodes[0].InnerText.Trim();
+                    string numberOfRoom = item.ChildNodes[9].ChildNodes[0].InnerText.Trim();
+                    //string announcementDate = item.ChildNodes[13].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+                    //string announcementYear = item.ChildNodes[13].ChildNodes[5].ChildNodes[0].InnerText.Trim();
+
+                    homesSahibinden.Add(new HomesSahibinden()
+                    {
+                        price = price,
+                        link = link,
+                        image = img,
+                        city = city,
+                        age = "",
+                        floor = "",
+                        metre = metre,
+                        room = numberOfRoom,
+                    }); ;
+                }
 
             }
-            return View(homes);
+
+
+            //veritabanına kayıt işlemleri
+            
+            
+            //önce eski kayıtlar silinir
+            var getHome = db.Homes.ToList();
+            var getHomeSahibinden = db.HomesSahibinden.ToList();
+
+            db.Homes.RemoveRange(getHome);
+            db.HomesSahibinden.RemoveRange(getHomeSahibinden);
+
+            //sonra yeni kayıtlar eklenir.
+            db.Homes.AddRange(homes);
+            db.HomesSahibinden.AddRange(homesSahibinden);
+            if (db.SaveChanges() > 0)
+            {
+                //return RedirectToAction("Index");
+            }
+            else
+            {
+                //return View();
+            }
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    db.Homes.Add();
+            //    db.SaveChanges();
+            //}
+
+            //önce homes verilerini hürriyet için oluşturduğun tabloya basacaksın
+
+            //sonra homessahibinden verilerini yeni oluşturacağın tabloya basacaksın
+
+            //iki tablo da tamamen aynı olacak 
+
+            
+            homesAllDatas.AddRange(homes);
+            //homesAllDatas.AddRange(homesSahibinden);
+
+
+            return View(homesAllDatas);
         }
+
+
+
+
+
+        //public ActionResult Create(List<Home> homenew)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        foreach (Home item in homenew)
+        //        {
+        //            db.Homes.Add(item);
+        //            db.SaveChanges();
+        //        }
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(homenew);
+        //}
     }
 }
