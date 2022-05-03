@@ -104,17 +104,11 @@ namespace WebScraping.Controllers
             {
                 //return View();
             }
+            
 
+            //önce homes verilerini hürriyet için oluşturduğun tabloya bas
 
-            //if (ModelState.IsValid)
-            //{
-            //    db.Homes.Add();
-            //    db.SaveChanges();
-            //}
-
-            //önce homes verilerini hürriyet için oluşturduğun tabloya basacaksın
-
-            //sonra homessahibinden verilerini yeni oluşturacağın tabloya basacaksın
+            //sonra homessahibinden verilerini yeni oluşturacağın tabloya bas
 
             //iki tablo da tamamen aynı olacak 
 
@@ -124,25 +118,6 @@ namespace WebScraping.Controllers
 
 
             return View(homesAllDatas);
-        }
-
-
-
-
-
-        //public ActionResult Create(List<Home> homenew)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        foreach (Home item in homenew)
-        //        {
-        //            db.Homes.Add(item);
-        //            db.SaveChanges();
-        //        }
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(homenew);
-        //}
+        }        
     }
 }

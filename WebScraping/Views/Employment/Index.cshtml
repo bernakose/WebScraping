@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebScraping.Models.Home>
+﻿@model List<WebScraping.Models.Siniflar.WebScrapingDBEntities>
 @{
     ViewBag.Title = "Index";
     Layout = null;
@@ -24,12 +24,12 @@
                         <th>
                             İlçe - Mahalle
                         </th>
-                        @*<th>
+                        <th>
                         Bina yaşı
                     </th>
                     <th>
                         Bulunduğu Kat
-                    </th>*@
+                    </th>
                         <th>
                             Oda Sayısı
                         </th>
@@ -54,12 +54,12 @@
                             <td>
                                 @item.city
                             </td>
-                            @*<td>
+                            <td>
                             @item.age
                         </td>
                         <td>
                             @item.floor
-                        </td>*@
+                        </td>
                             <td>
                                 @item.room
                             </td>
