@@ -23,5 +23,6 @@ namespace WebScraping.Models.Siniflar
         public string metre { get; set; }
         public string link { get; set; }
         public string image { get; set; }
+        public string county { get; set; }
     }
 }

@@ -22,14 +22,17 @@
                             Ev Fiyatı
                         </th>
                         <th>
-                            İlçe - Mahalle
+                            İl
                         </th>
                         <th>
-                        Bina yaşı
-                    </th>
-                    <th>
-                        Bulunduğu Kat
-                    </th>
+                            İlçe
+                        </th>
+                        <th>
+                            Bina yaşı
+                        </th>
+                        <th>
+                            Bulunduğu Kat
+                        </th>
                         <th>
                             Oda Sayısı
                         </th>
@@ -44,36 +47,39 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                <img src="@item.image" style="width:70px; height:70px;" />
-                            </td>
-                            <td>
-                                @item.price
-                            </td>
-                            <td>
-                                @item.city
-                            </td>
-                            <td>
+                    <tr>
+                        <td>
+                            <img src="@item.image" style="width:70px; height:70px;" />
+                        </td>
+                        <td>
+                            @item.price
+                        </td>
+                        <td>
+                            @item.city
+                        </td>
+                        <td>
+                            @item.county
+                        </td>
+                        <td>
                             @item.age
                         </td>
                         <td>
                             @item.floor
                         </td>
-                            <td>
-                                @item.room
-                            </td>
-                            <td>
-                                @item.metre
-                            </td>
-                            <td>
-                                <a href="@item.link">Detaylar</a>
-                            </td>
-                        </tr>
+                        <td>
+                            @item.room
+                        </td>
+                        <td>
+                            @item.metre
+                        </td>
+                        <td>
+                            <a href="@item.link">Detaylar</a>
+                        </td>
+                    </tr>
                     }
 
                 </tbody>
-            </table>            
+            </table>
         </div>
     </div>
 </div>
