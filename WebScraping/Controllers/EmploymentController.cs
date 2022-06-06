@@ -57,10 +57,16 @@ namespace WebScraping.Controllers
                             price = price,
                             city = city,
                             county = county,
-                            room = room,
                             age = age,
                             floor = floor,
+                            room = room,
                             metre = metre,
+                            district = district,
+                            totalFloor = totalFloor,
+                            heating=heating,
+                            isFurnished=isFurnished,
+                            formHousing=formHousing,
+                            bathroom=bathroom,
                             link = link,
                             image = img
                         }); ;
@@ -107,23 +113,27 @@ namespace WebScraping.Controllers
                         homes.Add(new Homes()
                         {
                             price = price,
-                            link = link,
-                            image = img,
                             city = city,
+                            county = county,
+                            age = age,
+                            floor = floor,
                             room = room,
-                            age = "",
-                            floor = "",
-                            metre = metre
+                            metre = metre,
+                            district = district,
+                            totalFloor = totalFloor,
+                            heating = heating,
+                            isFurnished = isFurnished,
+                            formHousing = formHousing,
+                            bathroom = bathroom,
+                            link = link,
+                            image = img
                         }); ;
                         break;
                     }
                 }
-
             }
 
-
             //veritabanına kayıt işlemleri
-
 
             //önce eski kayıtlar silinir
             var getHome = db.Homes.ToList();

@@ -25,7 +25,7 @@ namespace WebScraping.Models.Siniflar
             throw new UnintentionalCodeFirstException();
         }
     
-        //public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Homes> Homes { get; set; }
         public virtual DbSet<HomesSahibinden> HomesSahibinden { get; set; }
     }

@@ -17,12 +17,18 @@ namespace WebScraping.Models.Siniflar
         public int ID { get; set; }
         public string price { get; set; }
         public string city { get; set; }
+        public string county { get; set; }
         public string age { get; set; }
         public string floor { get; set; }
         public string room { get; set; }
         public string metre { get; set; }
+        public string district { get; set; }
+        public string totalFloor { get; set; }
+        public string heating { get; set; }
+        public string isFurnished { get; set; }
+        public string formHousing { get; set; }
+        public string bathroom { get; set; }
         public string link { get; set; }
         public string image { get; set; }
-        public string county { get; set; }
     }
 }
