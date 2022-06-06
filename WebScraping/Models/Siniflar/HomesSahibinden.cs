@@ -15,7 +15,7 @@ namespace WebScraping.Models.Siniflar
     public partial class HomesSahibinden
     {
         public int ID { get; set; }
-        public string price { get; set; }
+        public int price { get; set; }
         public string city { get; set; }
         public string county { get; set; }
         public string age { get; set; }
