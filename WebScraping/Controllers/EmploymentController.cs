@@ -109,7 +109,6 @@ namespace WebScraping.Controllers
                         string isFurnished = shortcut.ChildNodes[25].ChildNodes[3].InnerText.Trim();
                         string bathroom = shortcut.ChildNodes[21].ChildNodes[3].InnerText.Trim();
 
-
                         homes.Add(new Homes()
                         {
                             price = price,
