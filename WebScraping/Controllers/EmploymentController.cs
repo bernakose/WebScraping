@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using WebScraping.Models.HelperModels;
 using WebScraping.Models.Siniflar;
 
 namespace WebScraping.Controllers
@@ -20,94 +20,166 @@ namespace WebScraping.Controllers
 
             //hepsiemlaktan çekilen veriler
             List<Homes> homes = new List<Homes>();
-            for (int i = 2; i < 3; i++)
+            for (int i = 2; i < 5; i++)
             {
                 var web = new HtmlWeb();
                 var doc = web.Load("https://www.hepsiemlak.com/kiralik?page=" + i);
                 foreach (var item in doc.DocumentNode.SelectNodes("//div[@class='list-view-line']"))
                 {
-                    string price = item.ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].InnerText.Trim();
+                    int price = Convert.ToInt32(item.ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].InnerText.Trim().Replace("TL", "").TrimEnd().Replace(".", ""));
                     //string city = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[2].InnerText.Trim();
-                    string age = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[6].ChildNodes[0].InnerText.Trim();
-                    string floor = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[8].ChildNodes[0].InnerText.Trim();
+                    //int age = Convert.ToInt32(item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[6].ChildNodes[0].InnerText.Trim().Split(' ')[0]);
+                    //int floor = Convert.ToInt32(item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[8].ChildNodes[0].InnerText.Trim());
                     string room = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                    string metre = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[4].ChildNodes[0].InnerText.Trim();
+                    int metre = Convert.ToInt32(item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[4].ChildNodes[0].InnerText.Trim().Replace("m2", "").TrimEnd().Replace(".", "").Split(' ')[0]);
                     string link = "https://www.hepsiemlak.com" + item.ChildNodes[2].ChildNodes[0].ChildNodes[0].GetAttributeValue("href", "").Trim();
-                    string img = item.ChildNodes[0].ChildNodes[2].ChildNodes[2].GetAttributeValue("data-src", "").Trim();
+                    string img = item.ChildNodes[0].ChildNodes[2].ChildNodes[2].InnerHtml.Replace("src=", "~").Replace("width", "~width").Replace("\"", "").Split('~')[1].Trim();
+
+                    #region Floor
+
+                    int floor = 0;
+                    var floorDeger = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[8].ChildNodes[0].InnerText.Trim();
+                    if (floorDeger == "Kot 4")
+                        floor = -4;
+                    else if (floorDeger == "Kot 3")
+                        floor = -3;
+                    else if (floorDeger == "Kot 2")
+                        floor = -2;
+                    else if (floorDeger == "Kot 1")
+                        floor = -1;
+                    else if (floorDeger == "Bodrum Katı")
+                        floor = 100;
+                    else if (floorDeger == "Zemin Katı")
+                        floor = 101;
+                    else if (floorDeger == "Bahçe Katı")
+                        floor = 102;
+                    else if (floorDeger == "Giriş Katı")
+                        floor = 103;
+                    else if (floorDeger == "Yüksek Giriş")
+                        floor = 104;
+                    else if (floorDeger == "Müstakil")
+                        floor = 105;
+                    else if (floorDeger == "Villa")
+                        floor = 106;
+                    else if (floorDeger == "Çatı Katı")
+                        floor = 107;
+                    else if (floorDeger == "Asma Kat")
+                        floor = 108;
+                    else if (floorDeger == "En Üst Kat")
+                        floor = 109;
+                    else if (floorDeger == "Teras Katı")
+                        floor = 110;
+                    else if (floorDeger == "Ara Kat")
+                        floor = 111;
+                    else if (floorDeger == "Villa Katı")
+                        floor = 0;
+                    else
+                    {
+                        if (floorDeger == "")
+                            floor = 0;
+                        else
+                            if (floorDeger.Contains('.'))
+                            floor = Convert.ToInt32(floorDeger.Split('.')[0]);
+                        else
+                            floor = Convert.ToInt32(floorDeger.Split(' ')[0]);
+                    }
+
+                    #endregion
+
+                    #region Age
+
+                    int age = 0;
+                    string ageDeger = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[6].ChildNodes[0].InnerText.Trim();
+
+                    if (ageDeger == "Sıfır Bina")
+                        age = 100;
+                    else
+                    {
+                        age = Convert.ToInt32(ageDeger.Split(' ')[0]);
+                    }
+
+                    #endregion
 
                     var doc2 = web.Load(link);
 
 
                     foreach (var item2 in doc2.DocumentNode.SelectNodes("//div[@class='cont-inner']"))
                     {
-                        var shortcut= item2.ChildNodes[0].ChildNodes[6].ChildNodes[2].ChildNodes[1];
+
+                        var shortcut = item2.ChildNodes[0].ChildNodes[6].ChildNodes[2].ChildNodes[1];
                         var shortcut1 = item2.ChildNodes[0].ChildNodes[6].ChildNodes[2].ChildNodes[0];
+                        string heating = "";
+                        int totalFloor = 0;
+                        string isFurnished = "";
+                        string formHousing = "";
+                        int bathroom = 0;
+
+                        int sınır = shortcut.ChildNodes.Count;
+                        int sınır1 = shortcut1.ChildNodes.Count;
+
+                        if (sınır > sınır1)
+                        {
+                            sınır = sınır1;
+                        }
+                        for (int j = 0; j < sınır; j++)
+                        {
+                            var ana = shortcut.ChildNodes[j].ChildNodes[0].ChildNodes[0].InnerText.Trim();
+                            var ana1 = shortcut1.ChildNodes[j].ChildNodes[0].ChildNodes[0].InnerText.Trim();
+
+                            if (ana == "Isınma Tipi")
+                            {
+                                heating = shortcut.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                            }
+                            else if (ana == "Kat Sayısı")
+                            {
+                                totalFloor = Convert.ToInt32(shortcut.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim().Split(' ')[0]);
+                            }
+                            else if (ana == "Eşya Durumu")
+                            {
+                                isFurnished = shortcut.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                            }
+                            else if (ana == "Konut Şekli")
+                            {
+                                formHousing = shortcut.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                            }
+                            else if (ana == "Banyo Sayısı")
+                            {
+                                bathroom = Convert.ToInt32(shortcut.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim());
+                            }
+
+
+                            if (ana1 == "Isınma Tipi")
+                            {
+                                heating = shortcut1.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                            }
+                            else if (ana1 == "Kat Sayısı")
+                            {
+                                totalFloor = Convert.ToInt32(shortcut1.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim().Split(' ')[0]);
+                            }
+                            else if (ana1 == "Eşya Durumu")
+                            {
+                                isFurnished = shortcut1.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                            }
+                            else if (ana1 == "Konut Şekli")
+                            {
+                                formHousing = shortcut1.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                            }
+
+                            else if (ana1 == "Banyo Sayısı")
+                            {
+                                bathroom = Convert.ToInt32(shortcut1.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim());
+                            }
+
+                        }
 
                         string city = item2.ChildNodes[0].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].InnerText.Trim();
                         string county = item2.ChildNodes[0].ChildNodes[4].ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
                         string district = item2.ChildNodes[0].ChildNodes[4].ChildNodes[0].ChildNodes[4].ChildNodes[0].InnerText.Trim();
-                        string totalFloor= shortcut.ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        string heating = shortcut1.ChildNodes[8].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        string isFurnished = shortcut.ChildNodes[1].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        string formHousing = shortcut1.ChildNodes[3].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        string bathroom = shortcut.ChildNodes[2].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-
-                        homes.Add(new Homes()
-                        {
-                            price = price,
-                            city = city,
-                            county = county,
-                            age = age,
-                            floor = floor,
-                            room = room,
-                            metre = metre,
-                            district = district,
-                            totalFloor = totalFloor,
-                            heating=heating,
-                            isFurnished=isFurnished,
-                            formHousing=formHousing,
-                            bathroom=bathroom,
-                            link = link,
-                            image = img
-                        }); ;
-                        break;
-                    }
-                }
-            }
-
-            //sahibinden çekilen veriler
-            List<HomesSahibinden> homesSahibinden = new List<HomesSahibinden>();
-            for (int i = 20; i < 120; i += 20)
-            {
-                var web = new HtmlWeb();
-                var doc = web.Load("https://www.sahibinden.com/kiralik?pagingOffset=" + i);
-
-                foreach (var item in doc.DocumentNode.SelectNodes("//tr[@class='searchResultsItem     ']"))
-                {
-                    string price = item.ChildNodes[11].ChildNodes[1].InnerText.Trim();
-                    string link = "https://www.sahibinden.com/" + item.ChildNodes[1].ChildNodes[1].GetAttributeValue("href", "").Trim();
-                    string img = item.ChildNodes[1].ChildNodes[1].ChildNodes[1].GetAttributeValue("src", "").Trim();
-                    string city = item.ChildNodes[15].ChildNodes[0].InnerText.Trim();
-                    string county = item.ChildNodes[15].ChildNodes[2].InnerText.Trim();
-                    string metre = item.ChildNodes[7].ChildNodes[0].InnerText.Trim();
-                    string room = item.ChildNodes[9].ChildNodes[0].InnerText.Trim();
-                    //string announcementDate = item.ChildNodes[13].ChildNodes[1].ChildNodes[0].InnerText.Trim();
-                    //string announcementYear = item.ChildNodes[13].ChildNodes[5].ChildNodes[0].InnerText.Trim();
-                    string formHousing = item.ChildNodes[3].ChildNodes[0].InnerText.Trim();
-
-                    var doc2 = web.Load(link);
-
-                    foreach (var item2 in doc2.DocumentNode.SelectNodes("//div[@class='classifiedDetail']"))
-                    {
-                        var shortcut = item2.ChildNodes[5].ChildNodes[13].ChildNodes[6];
-
-                        string district = item2.ChildNodes[5].ChildNodes[13].ChildNodes[5].ChildNodes[9].ChildNodes[0].InnerText.Trim();
-                        string age = shortcut.ChildNodes[13].ChildNodes[3].InnerText.Trim();
-                        string floor= shortcut.ChildNodes[15].ChildNodes[3].InnerText.Trim();
-                        string totalFloor= shortcut.ChildNodes[17].ChildNodes[3].InnerText.Trim();
-                        string heating = shortcut.ChildNodes[19].ChildNodes[3].InnerText.Trim();
-                        string isFurnished = shortcut.ChildNodes[25].ChildNodes[3].InnerText.Trim();
-                        string bathroom = shortcut.ChildNodes[21].ChildNodes[3].InnerText.Trim();
+                        //string totalFloor = shortcut.ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                        //string heating = shortcut1.ChildNodes[8].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                        //string isFurnished = shortcut.ChildNodes[1].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                        //string formHousing = shortcut1.ChildNodes[3].ChildNodes[2].ChildNodes[0].InnerText.Trim();
+                        //string bathroom = shortcut.ChildNodes[2].ChildNodes[2].ChildNodes[0].InnerText.Trim();
 
                         homes.Add(new Homes()
                         {
@@ -132,25 +204,242 @@ namespace WebScraping.Controllers
                 }
             }
 
+            //Emlakjetten çekilen veriler
+            List<HomesSahibinden> homesEmlakJet = new List<HomesSahibinden>();
+            for (int i = 1; i < 5; i++)
+            {
+                var web = new HtmlWeb();
+                var doc = web.Load("https://www.emlakjet.com/kiralik-konut/" + i);
+
+                foreach (var item in doc.DocumentNode.SelectNodes("//div[@class='styles_listingItem__1asTK']"))
+                {
+                    int price = Convert.ToInt32(item.ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[0].InnerText.Trim().Replace(".", ""));
+                    string link = "https://www.emlakjet.com/" + item.ChildNodes[0].GetAttributeValue("href", "").Trim();
+                    string img = item.ChildNodes[0].ChildNodes[1].ChildNodes[0].GetAttributeValue("src", "").Trim();
+                    int metre = Convert.ToInt32(item.ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[1].ChildNodes[3].ChildNodes[1].InnerText.Trim().Replace("m2", "").TrimEnd().Replace(".", "").Split(' ')[0]);
+                    string room = item.ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[1].ChildNodes[1].ChildNodes[1].InnerText.Trim();
+                    string formHousing = item.ChildNodes[0].ChildNodes[2].ChildNodes[0].ChildNodes[1].ChildNodes[0].ChildNodes[1].InnerText.Trim();
+
+                    var doc2 = web.Load(link);
+                    var list = doc2.DocumentNode.SelectNodes("//div[@class='ej64 ej100 ej156']");
+                    foreach (var item2 in list)
+                    {
+                        string citycountydistrict = item2.ChildNodes[3].ChildNodes[0].ChildNodes[1].ChildNodes[0].ChildNodes[0].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+
+                        string[] ayrac;
+                        ayrac = citycountydistrict.Split('-');
+
+                        string city = ayrac[0].Trim();
+                        string county = ayrac[1].Trim();
+                        string district = ayrac[2].Trim();
+
+                        var shortcut = item2.ChildNodes[4].ChildNodes[0].ChildNodes[1].ChildNodes[0].ChildNodes[0].ChildNodes[0];
+                        var shortcut1 = item2.ChildNodes[4].ChildNodes[0].ChildNodes[1].ChildNodes[0].ChildNodes[0].ChildNodes[1];
+                        string heating = "";
+                        int totalFloor = 0;
+                        string isFurnished = "";
+                        int bathroom = 0;
+                        int age = 0;
+                        int floor = 0;
+
+                        int sınır = shortcut.ChildNodes.Count;
+                        int sınır1 = shortcut1.ChildNodes.Count;
+
+                        if (sınır > sınır1)
+                        {
+                            sınır = sınır1;
+                        }
+
+                        for (int j = 0; j < sınır; j++)
+                        {
+                            var ana = shortcut.ChildNodes[j].ChildNodes[0].ChildNodes[0].InnerText.Trim();
+                            var ana1 = shortcut1.ChildNodes[j].ChildNodes[0].ChildNodes[0].InnerText.Trim();
+
+                            if (ana == "Isıtma Tipi")
+                            {
+                                var heatingDeger = shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+                                if (heatingDeger == "Klimalı")
+                                    heating = "Klima";
+                                else
+                                    heating = heatingDeger;
+                            }
+                            else if (ana == "Binanın Kat Sayısı")
+                            {
+                                totalFloor = Convert.ToInt32(shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+                            }
+                            else if (ana == "Eşya Durumu")
+                            {
+                                var isFurnishedDeger = shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+                                if (isFurnishedDeger == "Boş")
+                                    isFurnished = "Eşyalı Değil";
+                                else
+                                    isFurnished = isFurnishedDeger;
+                            }
+                            else if (ana == "Banyo Sayısı")
+                            {
+
+                                if (shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim() == "Yok")
+                                    bathroom = 0;
+                                else
+                                    bathroom = Convert.ToInt32(shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+                            }
+                            else if (ana == "Binanın Yaşı")
+                            {
+                                //age = Convert.ToInt32(shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+                                #region Age
+
+                                string ageDeger = shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+
+                                if (ageDeger == "Sıfır Bina")
+                                    age = 100;
+                                else
+                                {
+                                    if (ageDeger.Contains('-'))
+                                        age = Convert.ToInt32(ageDeger.Split('-')[0]);
+                                    else
+                                        age = Convert.ToInt32(ageDeger.Split(' ')[0]);
+                                }
+
+                                #endregion
+                            }
+                            else if (ana == "Bulunduğu Kat")
+                            {
+                                floor = Convert.ToInt32(shortcut.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+                            }
+
+
+                            if (ana1 == "Isıtma Tipi")
+                            {
+                                var heatingDeger = shortcut1.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+                                if (heatingDeger == "Klimalı")
+                                    heating = "Klima";
+                                else
+                                    heating = heatingDeger;
+                            }
+                            else if (ana1 == "Binanın Kat Sayısı")
+                            {
+                                totalFloor = Convert.ToInt32(shortcut1.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+                            }
+                            else if (ana1 == "Eşya Durumu")
+                            {
+                                var isFurnishedDeger = shortcut1.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+                                if (isFurnishedDeger == "Boş")
+                                    isFurnished = "Eşyalı Değil";
+                                else
+                                    isFurnished = isFurnishedDeger;
+                            }
+                            else if (ana1 == "Banyo Sayısı")
+                            {
+                                bathroom = Convert.ToInt32(shortcut1.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+                            }
+                            else if (ana1 == "Binanın Yaşı")
+                            {
+                                age = Convert.ToInt32(shortcut1.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+                            }
+                            else if (ana1 == "Bulunduğu Kat")
+                            {
+                                //floor = Convert.ToInt32(shortcut1.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim());
+
+
+                                #region Floor
+
+                                var floorDeger = shortcut1.ChildNodes[j].ChildNodes[1].ChildNodes[0].InnerText.Trim();
+                                if (floorDeger == "Kot 4 (-4). Kat")
+                                    floor = -4;
+                                else if (floorDeger == "Kot 3 (-3). Kat")
+                                    floor = -3;
+                                else if (floorDeger == "Kot 2 (-2). Kat")
+                                    floor = -2;
+                                else if (floorDeger == "Kot 1 (-1). Kat")
+                                    floor = -1;
+                                else if (floorDeger == "Bodrum Katı")
+                                    floor = 100;
+                                else if (floorDeger == "Zemin Katı")
+                                    floor = 101;
+                                else if (floorDeger == "Bahçe Katı")
+                                    floor = 102;
+                                else if (floorDeger == "Giriş Katı")
+                                    floor = 103;
+                                else if (floorDeger == "Yüksek Giriş")
+                                    floor = 104;
+                                else if (floorDeger == "Müstakil")
+                                    floor = 105;
+                                else if (floorDeger == "Villa Tipi")
+                                    floor = 106;
+                                else if (floorDeger == "Çatı Katı")
+                                    floor = 107;
+                                else if (floorDeger == "Asma Kat")
+                                    floor = 108;
+                                else if (floorDeger == "En Üst Kat")
+                                    floor = 109;
+                                else if (floorDeger == "Teras Katı")
+                                    floor = 110;
+                                else if (floorDeger == "Ara Kat")
+                                    floor = 111;
+                                else if (floorDeger == "Çatı Dubleks")
+                                    floor = 112;
+                                else if (floorDeger == "Düz Giriş")
+                                    floor = 113;
+                                else if (floorDeger == "Bahçe Dublex")
+                                    floor = 114;
+                                else
+                                {
+                                    if (floorDeger == "")
+                                        floor = 0;
+                                    else
+                                        if (floorDeger.Contains('.'))
+                                        floor = Convert.ToInt32(floorDeger.Split('.')[0]);
+                                    else
+                                        floor = Convert.ToInt32(floorDeger.Split(' ')[0]);
+                                }
+
+                                #endregion
+                            }
+
+                        }
+
+                        homesEmlakJet.Add(new HomesSahibinden()
+                        {
+                            price = price,
+                            city = city,
+                            county = county,
+                            age = age,
+                            floor = floor,
+                            room = room,
+                            metre = metre,
+                            district = district,
+                            totalFloor = totalFloor,
+                            heating = heating,
+                            isFurnished = isFurnished,
+                            formHousing = formHousing,
+                            bathroom = bathroom,
+                            link = link,
+                            image = img
+                        }); ;
+                        break;
+                    }
+                }
+            }
+
             //veritabanına kayıt işlemleri
 
-            //önce eski kayıtlar silinir
-            var getHome = db.Homes.ToList();
-            var getHomeSahibinden = db.HomesSahibinden.ToList();
+            ////önce eski kayıtlar silinir
+            //var getHome = db.Homes.ToList();
+            //var getHomeSahibinden = db.HomesSahibinden.ToList();
 
-            db.Homes.RemoveRange(getHome);
-            db.HomesSahibinden.RemoveRange(getHomeSahibinden);
+            //db.Homes.RemoveRange(getHome);
+            //db.HomesSahibinden.RemoveRange(getHomeSahibinden);
 
             //sonra yeni kayıtlar eklenir.
             db.Homes.AddRange(homes);
-            //db.HomesSahibinden.AddRange(homesSahibinden);
+            db.HomesSahibinden.AddRange(homesEmlakJet);
             if (db.SaveChanges() > 0)
             {
-                //return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                //return View();
+                return View();
             }
 
 
@@ -161,11 +450,182 @@ namespace WebScraping.Controllers
             //iki tablo da tamamen aynı olacak 
 
 
-            homesAllDatas.AddRange(homes);
+            //homesAllDatas.AddRange(homes);
             //homesAllDatas.AddRange(homesSahibinden);
 
 
             return View(homesAllDatas);
+        }
+
+        public JsonResult Il(long ilId)
+        {
+            var ilce = db.ilce.Where(a => a.ilId == ilId).OrderBy(a => a.ilce1).ToList();
+
+            return Json(ilce, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Ilce(long ilceId)
+        {
+            var mahalle = db.mahalle.Where(a => a.ilceId == ilceId).OrderBy(a => a.mahalle1).ToList();
+
+            return Json(mahalle, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult EvAra(string il, string ilce, string mahalle, string minfiyat,
+            string maxfiyat, string minmk, string maxmk, string oda,
+            string yas, string kat, string totalkat, string isinma,
+            string banyo, string esya)
+        {
+            var _minfiyat = Convert.ToInt32(minfiyat == "" ? "0" : minfiyat);
+            var _maxfiyat = Convert.ToInt32(maxfiyat == "" ? "0" : maxfiyat);
+            var _minmk = Convert.ToInt32(minmk == "" ? "0" : minmk);
+            var _maxmk = Convert.ToInt32(maxmk == "" ? "0" : maxmk);
+            var _yas = Convert.ToInt32(yas == "" ? "0" : yas);
+            var _kat = Convert.ToInt32(kat == "" ? "0" : kat);
+            var _totalkat = Convert.ToInt32(totalkat == "" ? "0" : totalkat);
+            var _banyo = Convert.ToInt32(banyo == "" ? "0" : banyo);
+
+
+            List<Homes> homeAllListLast = db.Homes.ToList();
+            List<HomesSahibinden> homeTwiceAllListLast = db.HomesSahibinden.ToList();
+
+            if (il != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.city.ToLower().Contains(il.ToLower())).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.city.ToLower().Contains(il.ToLower())).ToList();
+            }
+            if (ilce != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.county.ToLower().Contains(ilce.ToLower())).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.county.ToLower().Contains(ilce.ToLower())).ToList();
+            }
+            if (mahalle != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.district.ToLower().Contains(mahalle.ToLower())).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.district.ToLower().Contains(mahalle.ToLower())).ToList();
+            }
+            if (minfiyat != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.price >= _minfiyat).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.price >= _minfiyat).ToList();
+            }
+            if (minfiyat != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.price <= _maxfiyat).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.price <= _maxfiyat).ToList();
+            }
+            if (minmk != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.metre >= _minmk).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.metre >= _minmk).ToList();
+            }
+            if (maxmk != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.metre <= _maxmk).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.metre <= _maxmk).ToList();
+            }
+            if (oda != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.room.ToLower().Contains(oda.ToLower())).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.room.ToLower().Contains(oda.ToLower())).ToList();
+            }
+            if (yas != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.age == _yas).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.age == _yas).ToList();
+            }
+            if (kat != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.floor == _kat).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.floor == _kat).ToList();
+            }
+            if (totalkat != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.totalFloor == _totalkat).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.totalFloor == _totalkat).ToList();
+            }
+            if (isinma != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.heating.ToLower().Contains(isinma.ToLower())).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.heating.ToLower().Contains(isinma.ToLower())).ToList();
+            }
+            if (banyo != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.bathroom == _banyo).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.bathroom == _banyo).ToList();
+            }
+            if (esya != "")
+            {
+                homeAllListLast = homeAllListLast.Where(a => a.isFurnished.ToLower().Contains(esya.ToLower())).ToList();
+                homeTwiceAllListLast = homeTwiceAllListLast.Where(a => a.isFurnished.ToLower().Contains(esya.ToLower())).ToList();
+            }
+
+
+
+            List<KiralikEvList> totalList = new List<KiralikEvList>();
+
+            foreach (var item in homeAllListLast)
+            {
+                totalList.Add(new KiralikEvList
+                {
+                    ID = item.ID,
+                    age = item.age,
+                    bathroom = item.bathroom,
+                    city = item.city,
+                    county = item.county,
+                    district = item.district,
+                    floor = item.floor,
+                    formHousing = item.formHousing,
+                    heating = item.heating,
+                    image = item.image,
+                    isFurnished = item.isFurnished,
+                    link = item.link,
+                    metre = item.metre,
+                    price = item.price,
+                    room = item.room,
+                    totalFloor = item.totalFloor
+                });
+            }
+
+            foreach (var itemjet in homeTwiceAllListLast)
+            {
+                totalList.Add(new KiralikEvList
+                {
+                    ID = itemjet.ID,
+                    age = itemjet.age,
+                    bathroom = itemjet.bathroom,
+                    city = itemjet.city,
+                    county = itemjet.county,
+                    district = itemjet.district,
+                    floor = itemjet.floor,
+                    formHousing = itemjet.formHousing,
+                    heating = itemjet.heating,
+                    image = itemjet.image,
+                    isFurnished = itemjet.isFurnished,
+                    link = itemjet.link,
+                    metre = itemjet.metre,
+                    price = itemjet.price,
+                    room = itemjet.room,
+                    totalFloor = itemjet.totalFloor
+                });
+            }
+
+            return Json(totalList, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+        public ActionResult Karsilastir()
+        {
+             ViewBag.Homes = TempData["homes"] as Homes;
+             ViewBag.HomesSahibinden = TempData["homessahibinden"] as HomesSahibinden;
+
+            var ilList = db.il.OrderBy(a => a.il1).ToList();
+
+            ViewBag.il = ilList;
+
+            return View("Karsilastir");
         }
     }
 }

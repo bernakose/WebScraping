@@ -55,12 +55,49 @@
     <Reference Include="HtmlAgilityPack, Version=1.11.38.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.38\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -138,6 +175,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\HelperModels\KiralikEvList.cs" />
     <Compile Include="Models\Siniflar\C__MigrationHistory.cs">
       <DependentUpon>WebScrapingDB.tt</DependentUpon>
     </Compile>
@@ -145,6 +183,15 @@
       <DependentUpon>WebScrapingDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Siniflar\HomesSahibinden.cs">
+      <DependentUpon>WebScrapingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Siniflar\il.cs">
+      <DependentUpon>WebScrapingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Siniflar\ilce.cs">
+      <DependentUpon>WebScrapingDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Siniflar\mahalle.cs">
       <DependentUpon>WebScrapingDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Siniflar\WebScrapingDB.Context.cs">
@@ -157,11 +204,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebScrapingDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Siniflar\WebScrapingDB1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WebScrapingDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +212,41 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\realEstateMain.css" />
+    <Content Include="Content\css\tasarimCss\animate.css" />
+    <Content Include="Content\css\tasarimCss\bootstrap-datepicker.min.css" />
+    <Content Include="Content\css\tasarimCss\bootstrap.css" />
+    <Content Include="Content\css\tasarimCss\cs-select.css" />
+    <Content Include="Content\css\tasarimCss\cs-skin-border.css" />
+    <Content Include="Content\css\tasarimCss\flexslider.css" />
+    <Content Include="Content\css\tasarimCss\icomoon.css" />
+    <Content Include="Content\css\tasarimCss\magnific-popup.css" />
+    <Content Include="Content\css\tasarimCss\style.css" />
+    <Content Include="Content\css\tasarimCss\superfish.css" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\fonts\icomoon\icomoon.svg" />
+    <Content Include="Content\fonts\icomoon\icomoon\demo-files\demo.css" />
+    <Content Include="Content\fonts\icomoon\icomoon\demo-files\demo.js" />
+    <Content Include="Content\fonts\icomoon\icomoon\demo.html" />
+    <Content Include="Content\fonts\icomoon\icomoon\fonts\icomoon.svg" />
+    <Content Include="Content\fonts\icomoon\icomoon\Read Me.txt" />
+    <Content Include="Content\fonts\icomoon\icomoon\style.css" />
     <Content Include="Content\js\re.js" />
+    <Content Include="Content\js\tasarimJs\bootstrap-datepicker.min.js" />
+    <Content Include="Content\js\tasarimJs\bootstrap.min.js" />
+    <Content Include="Content\js\tasarimJs\classie.js" />
+    <Content Include="Content\js\tasarimJs\google_map.js" />
+    <Content Include="Content\js\tasarimJs\hoverIntent.js" />
+    <Content Include="Content\js\tasarimJs\jquery.easing.1.3.js" />
+    <Content Include="Content\js\tasarimJs\jquery.flexslider-min.js" />
+    <Content Include="Content\js\tasarimJs\jquery.min.js" />
+    <Content Include="Content\js\tasarimJs\jquery.waypoints.min.js" />
+    <Content Include="Content\js\tasarimJs\main.js" />
+    <Content Include="Content\js\tasarimJs\modernizr-2.6.2.min.js" />
+    <Content Include="Content\js\tasarimJs\respond.min.js" />
+    <Content Include="Content\js\tasarimJs\selectFx.js" />
+    <Content Include="Content\js\tasarimJs\sticky.js" />
+    <Content Include="Content\js\tasarimJs\superfish.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -194,6 +270,100 @@
     <Content Include="Models\Siniflar\WebScrapingDB.edmx.diagram">
       <DependentUpon>WebScrapingDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\css\tasarimCss\.DS_Store" />
+    <Content Include="Content\css\tasarimCss\bootstrap.css.map" />
+    <Content Include="Content\css\tasarimCss\style.css.map" />
+    <Content Include="Content\js\tasarimJs\.DS_Store" />
+    <Content Include="Content\saas\.DS_Store" />
+    <Content Include="Content\saas\bootstrap.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_alerts.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_center-block.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_forms.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_grid.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_image.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_labels.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_opacity.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_panels.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_resize.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_size.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="Content\saas\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="Content\saas\bootstrap\_alerts.scss" />
+    <Content Include="Content\saas\bootstrap\_badges.scss" />
+    <Content Include="Content\saas\bootstrap\_breadcrumbs.scss" />
+    <Content Include="Content\saas\bootstrap\_button-groups.scss" />
+    <Content Include="Content\saas\bootstrap\_buttons.scss" />
+    <Content Include="Content\saas\bootstrap\_carousel.scss" />
+    <Content Include="Content\saas\bootstrap\_close.scss" />
+    <Content Include="Content\saas\bootstrap\_code.scss" />
+    <Content Include="Content\saas\bootstrap\_component-animations.scss" />
+    <Content Include="Content\saas\bootstrap\_dropdowns.scss" />
+    <Content Include="Content\saas\bootstrap\_forms.scss" />
+    <Content Include="Content\saas\bootstrap\_glyphicons.scss" />
+    <Content Include="Content\saas\bootstrap\_grid.scss" />
+    <Content Include="Content\saas\bootstrap\_input-groups.scss" />
+    <Content Include="Content\saas\bootstrap\_jumbotron.scss" />
+    <Content Include="Content\saas\bootstrap\_labels.scss" />
+    <Content Include="Content\saas\bootstrap\_list-group.scss" />
+    <Content Include="Content\saas\bootstrap\_media.scss" />
+    <Content Include="Content\saas\bootstrap\_mixins.scss" />
+    <Content Include="Content\saas\bootstrap\_modals.scss" />
+    <Content Include="Content\saas\bootstrap\_navbar.scss" />
+    <Content Include="Content\saas\bootstrap\_navs.scss" />
+    <Content Include="Content\saas\bootstrap\_normalize.scss" />
+    <Content Include="Content\saas\bootstrap\_pager.scss" />
+    <Content Include="Content\saas\bootstrap\_pagination.scss" />
+    <Content Include="Content\saas\bootstrap\_panels.scss" />
+    <Content Include="Content\saas\bootstrap\_popovers.scss" />
+    <Content Include="Content\saas\bootstrap\_print.scss" />
+    <Content Include="Content\saas\bootstrap\_progress-bars.scss" />
+    <Content Include="Content\saas\bootstrap\_responsive-embed.scss" />
+    <Content Include="Content\saas\bootstrap\_responsive-utilities.scss" />
+    <Content Include="Content\saas\bootstrap\_scaffolding.scss" />
+    <Content Include="Content\saas\bootstrap\_tables.scss" />
+    <Content Include="Content\saas\bootstrap\_theme.scss" />
+    <Content Include="Content\saas\bootstrap\_thumbnails.scss" />
+    <Content Include="Content\saas\bootstrap\_tooltip.scss" />
+    <Content Include="Content\saas\bootstrap\_type.scss" />
+    <Content Include="Content\saas\bootstrap\_utilities.scss" />
+    <Content Include="Content\saas\bootstrap\_variables.scss" />
+    <Content Include="Content\saas\bootstrap\_wells.scss" />
+    <Content Include="Content\saas\style.scss" />
+    <Content Include="Content\saas\_bootstrap-compass.scss" />
+    <Content Include="Content\saas\_bootstrap-mincer.scss" />
+    <Content Include="Content\saas\_bootstrap-sprockets.scss" />
+    <Content Include="Content\fonts\.DS_Store" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\icomoon\.DS_Store" />
+    <Content Include="Content\fonts\icomoon\icomoon.eot" />
+    <Content Include="Content\fonts\icomoon\icomoon.ttf" />
+    <Content Include="Content\fonts\icomoon\icomoon.woff" />
+    <Content Include="Content\fonts\icomoon\icomoon\.DS_Store" />
+    <Content Include="Content\fonts\icomoon\icomoon\fonts\icomoon.eot" />
+    <Content Include="Content\fonts\icomoon\icomoon\fonts\icomoon.ttf" />
+    <Content Include="Content\fonts\icomoon\icomoon\fonts\icomoon.woff" />
+    <Content Include="Content\fonts\icomoon\icomoon\selection.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -220,6 +390,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Employment\Index.cshtml" />
+    <Content Include="Views\Employment\Karsilastir.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

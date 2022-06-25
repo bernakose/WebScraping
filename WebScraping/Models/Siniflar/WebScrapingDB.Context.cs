@@ -28,5 +28,8 @@ namespace WebScraping.Models.Siniflar
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Homes> Homes { get; set; }
         public virtual DbSet<HomesSahibinden> HomesSahibinden { get; set; }
+        public virtual DbSet<il> il { get; set; }
+        public virtual DbSet<ilce> ilce { get; set; }
+        public virtual DbSet<mahalle> mahalle { get; set; }
     }
 }

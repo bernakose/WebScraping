@@ -5,9 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="945cfd1701f64547abf845135b38555e" Name="Diagram1">
-        <EntityTypeShape EntityType="WebScrapingDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebScrapingDBModel.Homes" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebScrapingDBModel.HomesSahibinden" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebScrapingDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebScrapingDBModel.Homes" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebScrapingDBModel.HomesSahibinden" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebScrapingDBModel.il" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="WebScrapingDBModel.ilce" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="WebScrapingDBModel.mahalle" Width="1.5" PointX="4.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

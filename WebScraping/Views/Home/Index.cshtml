@@ -1,985 +1,388 @@
-﻿@model List<WebScraping.Models.Siniflar.Homes>
+﻿@using PagedList
+@using PagedList.Mvc
 @{
-
-    ViewBag.Title = "Home Page";
+    var slider = ViewBag.Slider;
+    var il = ViewBag.il;
 }
 
 
-<style>
-    .sahibindenSelect.closed {
-        height: 30px !important;
-    }
-</style>
-    
-<div id="container">
-    <div class="top-menu-container clearfix custom-category-container">
+@model PagedList.IPagedList<WebScraping.Models.HelperModels.KiralikEvList>
+@{
 
-        <div class="top-menu-right" data-search-type="category/quick">
-            <div class="search-menu home" data-category="home">
-                <div class="search-menu-container">
+    ViewBag.Title = "Ana Sayfa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
-                    <ul class="search-menu-header clearfix">
-                        <li class="home  active"><a href="#" data-category="isResidental" data-tab="home">Konut</a></li>
-                    </ul>
-                    <form action="/arama/ara" autocomplete="off" id="searchForm" class="searchForm isResidental">
-                        <div class="search-menu-main">
-                            <div class="menu-part clearfix" style="display: flex;">
-                                <div class="categories-area split-area"><select name="categorySelect" id="categorySelect" class="selectedOption" style="display: none;"><option value="16623">Satılık</option><option value="16622">Kiralık</option><option value="16621">Günlük Kiralık</option><option value="229468">Devren Satılık Konut</option></select><div class="sahibindenSelect-holder"><div class="sahibindenSelect closed categoryArea"><span>Satılık</span><ul class="selectList"><li class="selected" data-value="16623">Satılık</li><li data-value="16622">Kiralık</li><li data-value="16621">Günlük Kiralık</li><li data-value="229468">Devren Satılık Konut</li></ul></div></div><select name="category" id="category" class="selectedOption" style="display: none;"><option value="16623">Konut</option><option value="16633">Daire</option><option value="152512">Residence</option><option value="16635">Müstakil Ev</option><option value="16636">Villa</option><option value="152456">Çiftlik Evi</option><option value="152480">Köşk &amp; Konak</option><option value="152490">Yalı</option><option value="152496">Yalı Dairesi</option><option value="16640">Yazlık</option><option value="17497">Prefabrik Ev</option><option value="16641">Kooperatif</option></select><div class="sahibindenSelect-holder"><div class="sahibindenSelect closed subCategoryArea"><span>Konut</span><ul class="selectList"><li class="selected" data-value="16623">Konut</li><li data-value="16633">Daire</li><li data-value="152512">Residence</li><li data-value="16635">Müstakil Ev</li><li data-value="16636">Villa</li><li data-value="152456">Çiftlik Evi</li><li data-value="152480">Köşk &amp; Konak</li><li data-value="152490">Yalı</li><li data-value="152496">Yalı Dairesi</li><li data-value="16640">Yazlık</li><li data-value="17497">Prefabrik Ev</li><li data-value="16641">Kooperatif</li></ul></div></div></div>
-                                <div class="location-area">
-                                    <select class="city selectedOption" name="address_city" id="address_city" style="display: none;">
-                                        <option value="#ANY">İl</option>
-                                        <option value="34">
-                                            İstanbul
-                                        </option>
-                                        <option value="6">
-                                            Ankara
-                                        </option>
-                                        <option value="35">
-                                            İzmir
-                                        </option>
-                                        <option value="1">
-                                            Adana
-                                        </option>
-                                        <option value="2">
-                                            Adıyaman
-                                        </option>
-                                        <option value="3">
-                                            Afyonkarahisar
-                                        </option>
-                                        <option value="4">
-                                            Ağrı
-                                        </option>
-                                        <option value="68">
-                                            Aksaray
-                                        </option>
-                                        <option value="5">
-                                            Amasya
-                                        </option>
-                                        <option value="7">
-                                            Antalya
-                                        </option>
-                                        <option value="75">
-                                            Ardahan
-                                        </option>
-                                        <option value="8">
-                                            Artvin
-                                        </option>
-                                        <option value="9">
-                                            Aydın
-                                        </option>
-                                        <option value="10">
-                                            Balıkesir
-                                        </option>
-                                        <option value="74">
-                                            Bartın
-                                        </option>
-                                        <option value="72">
-                                            Batman
-                                        </option>
-                                        <option value="69">
-                                            Bayburt
-                                        </option>
-                                        <option value="11">
-                                            Bilecik
-                                        </option>
-                                        <option value="12">
-                                            Bingöl
-                                        </option>
-                                        <option value="13">
-                                            Bitlis
-                                        </option>
-                                        <option value="14">
-                                            Bolu
-                                        </option>
-                                        <option value="15">
-                                            Burdur
-                                        </option>
-                                        <option value="16">
-                                            Bursa
-                                        </option>
-                                        <option value="17">
-                                            Çanakkale
-                                        </option>
-                                        <option value="18">
-                                            Çankırı
-                                        </option>
-                                        <option value="19">
-                                            Çorum
-                                        </option>
-                                        <option value="20">
-                                            Denizli
-                                        </option>
-                                        <option value="21">
-                                            Diyarbakır
-                                        </option>
-                                        <option value="81">
-                                            Düzce
-                                        </option>
-                                        <option value="22">
-                                            Edirne
-                                        </option>
-                                        <option value="23">
-                                            Elazığ
-                                        </option>
-                                        <option value="24">
-                                            Erzincan
-                                        </option>
-                                        <option value="25">
-                                            Erzurum
-                                        </option>
-                                        <option value="26">
-                                            Eskişehir
-                                        </option>
-                                        <option value="27">
-                                            Gaziantep
-                                        </option>
-                                        <option value="28">
-                                            Giresun
-                                        </option>
-                                        <option value="29">
-                                            Gümüşhane
-                                        </option>
-                                        <option value="30">
-                                            Hakkari
-                                        </option>
-                                        <option value="31">
-                                            Hatay
-                                        </option>
-                                        <option value="76">
-                                            Iğdır
-                                        </option>
-                                        <option value="32">
-                                            Isparta
-                                        </option>
-                                        <option value="46">
-                                            Kahramanmaraş
-                                        </option>
-                                        <option value="78">
-                                            Karabük
-                                        </option>
-                                        <option value="70">
-                                            Karaman
-                                        </option>
-                                        <option value="36">
-                                            Kars
-                                        </option>
-                                        <option value="37">
-                                            Kastamonu
-                                        </option>
-                                        <option value="38">
-                                            Kayseri
-                                        </option>
-                                        <option value="71">
-                                            Kırıkkale
-                                        </option>
-                                        <option value="39">
-                                            Kırklareli
-                                        </option>
-                                        <option value="40">
-                                            Kırşehir
-                                        </option>
-                                        <option value="79">
-                                            Kilis
-                                        </option>
-                                        <option value="41">
-                                            Kocaeli
-                                        </option>
-                                        <option value="42">
-                                            Konya
-                                        </option>
-                                        <option value="43">
-                                            Kütahya
-                                        </option>
-                                        <option value="44">
-                                            Malatya
-                                        </option>
-                                        <option value="45">
-                                            Manisa
-                                        </option>
-                                        <option value="47">
-                                            Mardin
-                                        </option>
-                                        <option value="33">
-                                            Mersin
-                                        </option>
-                                        <option value="48">
-                                            Muğla
-                                        </option>
-                                        <option value="49">
-                                            Muş
-                                        </option>
-                                        <option value="50">
-                                            Nevşehir
-                                        </option>
-                                        <option value="51">
-                                            Niğde
-                                        </option>
-                                        <option value="52">
-                                            Ordu
-                                        </option>
-                                        <option value="80">
-                                            Osmaniye
-                                        </option>
-                                        <option value="53">
-                                            Rize
-                                        </option>
-                                        <option value="54">
-                                            Sakarya
-                                        </option>
-                                        <option value="55">
-                                            Samsun
-                                        </option>
-                                        <option value="56">
-                                            Siirt
-                                        </option>
-                                        <option value="57">
-                                            Sinop
-                                        </option>
-                                        <option value="58">
-                                            Sivas
-                                        </option>
-                                        <option value="63">
-                                            Şanlıurfa
-                                        </option>
-                                        <option value="73">
-                                            Şırnak
-                                        </option>
-                                        <option value="59">
-                                            Tekirdağ
-                                        </option>
-                                        <option value="60">
-                                            Tokat
-                                        </option>
-                                        <option value="61">
-                                            Trabzon
-                                        </option>
-                                        <option value="62">
-                                            Tunceli
-                                        </option>
-                                        <option value="64">
-                                            Uşak
-                                        </option>
-                                        <option value="65">
-                                            Van
-                                        </option>
-                                        <option value="77">
-                                            Yalova
-                                        </option>
-                                        <option value="66">
-                                            Yozgat
-                                        </option>
-                                        <option value="67">
-                                            Zonguldak
-                                        </option>
-                                    </select><div class="sahibindenSelect-holder">
-                                        <div class="sahibindenSelect closed city">
-                                            <span>İl</span><ul class="selectList">
-                                                <li class="selected" data-value="#ANY">İl</li>
-                                                <li data-value="34">
-                                                    İstanbul
-                                                </li>
-                                                <li data-value="6">
-                                                    Ankara
-                                                </li>
-                                                <li data-value="35">
-                                                    İzmir
-                                                </li>
-                                                <li data-value="1">
-                                                    Adana
-                                                </li>
-                                                <li data-value="2">
-                                                    Adıyaman
-                                                </li>
-                                                <li data-value="3">
-                                                    Afyonkarahisar
-                                                </li>
-                                                <li data-value="4">
-                                                    Ağrı
-                                                </li>
-                                                <li data-value="68">
-                                                    Aksaray
-                                                </li>
-                                                <li data-value="5">
-                                                    Amasya
-                                                </li>
-                                                <li data-value="7">
-                                                    Antalya
-                                                </li>
-                                                <li data-value="75">
-                                                    Ardahan
-                                                </li>
-                                                <li data-value="8">
-                                                    Artvin
-                                                </li>
-                                                <li data-value="9">
-                                                    Aydın
-                                                </li>
-                                                <li data-value="10">
-                                                    Balıkesir
-                                                </li>
-                                                <li data-value="74">
-                                                    Bartın
-                                                </li>
-                                                <li data-value="72">
-                                                    Batman
-                                                </li>
-                                                <li data-value="69">
-                                                    Bayburt
-                                                </li>
-                                                <li data-value="11">
-                                                    Bilecik
-                                                </li>
-                                                <li data-value="12">
-                                                    Bingöl
-                                                </li>
-                                                <li data-value="13">
-                                                    Bitlis
-                                                </li>
-                                                <li data-value="14">
-                                                    Bolu
-                                                </li>
-                                                <li data-value="15">
-                                                    Burdur
-                                                </li>
-                                                <li data-value="16">
-                                                    Bursa
-                                                </li>
-                                                <li data-value="17">
-                                                    Çanakkale
-                                                </li>
-                                                <li data-value="18">
-                                                    Çankırı
-                                                </li>
-                                                <li data-value="19">
-                                                    Çorum
-                                                </li>
-                                                <li data-value="20">
-                                                    Denizli
-                                                </li>
-                                                <li data-value="21">
-                                                    Diyarbakır
-                                                </li>
-                                                <li data-value="81">
-                                                    Düzce
-                                                </li>
-                                                <li data-value="22">
-                                                    Edirne
-                                                </li>
-                                                <li data-value="23">
-                                                    Elazığ
-                                                </li>
-                                                <li data-value="24">
-                                                    Erzincan
-                                                </li>
-                                                <li data-value="25">
-                                                    Erzurum
-                                                </li>
-                                                <li data-value="26">
-                                                    Eskişehir
-                                                </li>
-                                                <li data-value="27">
-                                                    Gaziantep
-                                                </li>
-                                                <li data-value="28">
-                                                    Giresun
-                                                </li>
-                                                <li data-value="29">
-                                                    Gümüşhane
-                                                </li>
-                                                <li data-value="30">
-                                                    Hakkari
-                                                </li>
-                                                <li data-value="31">
-                                                    Hatay
-                                                </li>
-                                                <li data-value="76">
-                                                    Iğdır
-                                                </li>
-                                                <li data-value="32">
-                                                    Isparta
-                                                </li>
-                                                <li data-value="46">
-                                                    Kahramanmaraş
-                                                </li>
-                                                <li data-value="78">
-                                                    Karabük
-                                                </li>
-                                                <li data-value="70">
-                                                    Karaman
-                                                </li>
-                                                <li data-value="36">
-                                                    Kars
-                                                </li>
-                                                <li data-value="37">
-                                                    Kastamonu
-                                                </li>
-                                                <li data-value="38">
-                                                    Kayseri
-                                                </li>
-                                                <li data-value="71">
-                                                    Kırıkkale
-                                                </li>
-                                                <li data-value="39">
-                                                    Kırklareli
-                                                </li>
-                                                <li data-value="40">
-                                                    Kırşehir
-                                                </li>
-                                                <li data-value="79">
-                                                    Kilis
-                                                </li>
-                                                <li data-value="41">
-                                                    Kocaeli
-                                                </li>
-                                                <li data-value="42">
-                                                    Konya
-                                                </li>
-                                                <li data-value="43">
-                                                    Kütahya
-                                                </li>
-                                                <li data-value="44">
-                                                    Malatya
-                                                </li>
-                                                <li data-value="45">
-                                                    Manisa
-                                                </li>
-                                                <li data-value="47">
-                                                    Mardin
-                                                </li>
-                                                <li data-value="33">
-                                                    Mersin
-                                                </li>
-                                                <li data-value="48">
-                                                    Muğla
-                                                </li>
-                                                <li data-value="49">
-                                                    Muş
-                                                </li>
-                                                <li data-value="50">
-                                                    Nevşehir
-                                                </li>
-                                                <li data-value="51">
-                                                    Niğde
-                                                </li>
-                                                <li data-value="52">
-                                                    Ordu
-                                                </li>
-                                                <li data-value="80">
-                                                    Osmaniye
-                                                </li>
-                                                <li data-value="53">
-                                                    Rize
-                                                </li>
-                                                <li data-value="54">
-                                                    Sakarya
-                                                </li>
-                                                <li data-value="55">
-                                                    Samsun
-                                                </li>
-                                                <li data-value="56">
-                                                    Siirt
-                                                </li>
-                                                <li data-value="57">
-                                                    Sinop
-                                                </li>
-                                                <li data-value="58">
-                                                    Sivas
-                                                </li>
-                                                <li data-value="63">
-                                                    Şanlıurfa
-                                                </li>
-                                                <li data-value="73">
-                                                    Şırnak
-                                                </li>
-                                                <li data-value="59">
-                                                    Tekirdağ
-                                                </li>
-                                                <li data-value="60">
-                                                    Tokat
-                                                </li>
-                                                <li data-value="61">
-                                                    Trabzon
-                                                </li>
-                                                <li data-value="62">
-                                                    Tunceli
-                                                </li>
-                                                <li data-value="64">
-                                                    Uşak
-                                                </li>
-                                                <li data-value="65">
-                                                    Van
-                                                </li>
-                                                <li data-value="77">
-                                                    Yalova
-                                                </li>
-                                                <li data-value="66">
-                                                    Yozgat
-                                                </li>
-                                                <li data-value="67">
-                                                    Zonguldak
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <select class="town" name="address_town" id="address_town" disabled="disabled" style="display: none;">
-                                        <option value="">İlçe</option>
-                                    </select><div class="sahibindenSelect-holder"><div class="sahibindenSelect closed town select-disabled"><span>İlçe</span><ul class="selectList"><li class="selected" data-value="">İlçe</li></ul></div></div>
-                                    <select class="district selectedOption" name="address_quarter" id="address_quarter" disabled="disabled" multiple="" style="display: none;">
-                                        <option value="">Mahalle</option>
-                                    </select><div class="sahibindenSelect-holder"><div class="sahibindenSelect closed district select-disabled"><span>Mahalle</span><ul class="checkList"><li><input type="checkbox" id="address_quarter_option_0" class="sub-checkbox option-checkbox" name="address_quarter" value=""><label for="address_quarter_option_0" class="option-label">Mahalle</label></li></ul></div></div>
-                                </div>
-                            </div>
-                            <div class="menu-part clearfix" style="display: flex;">
-                                <div class="selectable-area split-area">
-                                    <input type="text" class="priceField" placeholder="Min TL" id="minPrice" name="price_min" value="">
-                                    <span class="splitter">
-                                        -
-                                    </span>
-                                    <input type="text" class="priceField" placeholder="Max TL" id="maxPrice" name="price_max" value="">
-                                    <select name="price_currency" id="" class="selectedOption" style="display: none;">
-                                        <option value="1">TL</option>
-                                        <option value="2">USD</option>
-                                        <option value="3">EUR</option>
-                                        <option value="4">GBP</option>
-                                    </select><div class="sahibindenSelect-holder"><div class="sahibindenSelect closed"><span>TL</span><ul class="selectList"><li class="selected" data-value="1">TL</li><li data-value="2">USD</li><li data-value="3">EUR</li><li data-value="4">GBP</li></ul></div></div>
-                                </div>
-                                <div class="selectable-area room-area">
-                                    <select class="rooms residental" name="a20" id="a20" data-section="a20" multiple="" style="display: none;">
-                                        <option value="#ANY">
-                                            Tümü
-                                        </option>
-                                        <option value="38472">
-                                            Stüdyo (1+0)
-                                        </option>
-                                        <option value="38473">
-                                            1+1
-                                        </option>
-                                        <option value="1206094">
-                                            1.5+1
-                                        </option>
-                                        <option value="1213206">
-                                            2+0
-                                        </option>
-                                        <option value="38470">
-                                            2+1
-                                        </option>
-                                        <option value="1227923">
-                                            2.5+1
-                                        </option>
-                                        <option value="38496">
-                                            2+2
-                                        </option>
-                                        <option value="1259450">
-                                            3+0
-                                        </option>
-                                        <option value="38474">
-                                            3+1
-                                        </option>
-                                        <option value="1227924">
-                                            3.5+1
-                                        </option>
-                                        <option value="38486">
-                                            3+2
-                                        </option>
-                                        <option value="1255142">
-                                            4+0
-                                        </option>
-                                        <option value="38471">
-                                            4+1
-                                        </option>
-                                        <option value="1227925">
-                                            4.5+1
-                                        </option>
-                                        <option value="38485">
-                                            4+2
-                                        </option>
-                                        <option value="217738">
-                                            4+3
-                                        </option>
-                                        <option value="38502">
-                                            4+4
-                                        </option>
-                                        <option value="38475">
-                                            5+1
-                                        </option>
-                                        <option value="38479">
-                                            5+2
-                                        </option>
-                                        <option value="38494">
-                                            5+3
-                                        </option>
-                                        <option value="38497">
-                                            5+4
-                                        </option>
-                                        <option value="38477">
-                                            6+1
-                                        </option>
-                                        <option value="38480">
-                                            6+2
-                                        </option>
-                                        <option value="38500">
-                                            6+3
-                                        </option>
-                                        <option value="1256334">
-                                            6+4
-                                        </option>
-                                        <option value="38478">
-                                            7+1
-                                        </option>
-                                        <option value="38481">
-                                            7+2
-                                        </option>
-                                        <option value="38490">
-                                            7+3
-                                        </option>
-                                        <option value="38482">
-                                            8+1
-                                        </option>
-                                        <option value="38483">
-                                            8+2
-                                        </option>
-                                        <option value="1133410">
-                                            8+3
-                                        </option>
-                                        <option value="38498">
-                                            8+4
-                                        </option>
-                                        <option value="38491">
-                                            9+1
-                                        </option>
-                                        <option value="38492">
-                                            9+2
-                                        </option>
-                                        <option value="38493">
-                                            9+3
-                                        </option>
-                                        <option value="38487">
-                                            9+4
-                                        </option>
-                                        <option value="38488">
-                                            9+5
-                                        </option>
-                                        <option value="38489">
-                                            9+6
-                                        </option>
-                                        <option value="38501">
-                                            10+1
-                                        </option>
-                                        <option value="38495">
-                                            10+2
-                                        </option>
-                                        <option value="38476">
-                                            10 Üzeri
-                                        </option>
-                                    </select><div class="sahibindenSelect-holder">
-                                        <div class="sahibindenSelect closed rooms residental">
-                                            <span>Oda Sayısı</span><ul class="checkList">
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_0" class="sub-checkbox option-checkbox" name="a20" value="#ANY"><label for="a20_option_0" class="option-label">
-                                                        Tümü
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_1" class="sub-checkbox option-checkbox" name="a20" value="38472"><label for="a20_option_1" class="option-label">
-                                                        Stüdyo (1+0)
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_2" class="sub-checkbox option-checkbox" name="a20" value="38473"><label for="a20_option_2" class="option-label">
-                                                        1+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_3" class="sub-checkbox option-checkbox" name="a20" value="1206094"><label for="a20_option_3" class="option-label">
-                                                        1.5+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_4" class="sub-checkbox option-checkbox" name="a20" value="1213206"><label for="a20_option_4" class="option-label">
-                                                        2+0
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_5" class="sub-checkbox option-checkbox" name="a20" value="38470"><label for="a20_option_5" class="option-label">
-                                                        2+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_6" class="sub-checkbox option-checkbox" name="a20" value="1227923"><label for="a20_option_6" class="option-label">
-                                                        2.5+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_7" class="sub-checkbox option-checkbox" name="a20" value="38496"><label for="a20_option_7" class="option-label">
-                                                        2+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_8" class="sub-checkbox option-checkbox" name="a20" value="1259450"><label for="a20_option_8" class="option-label">
-                                                        3+0
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_9" class="sub-checkbox option-checkbox" name="a20" value="38474"><label for="a20_option_9" class="option-label">
-                                                        3+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_10" class="sub-checkbox option-checkbox" name="a20" value="1227924"><label for="a20_option_10" class="option-label">
-                                                        3.5+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_11" class="sub-checkbox option-checkbox" name="a20" value="38486"><label for="a20_option_11" class="option-label">
-                                                        3+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_12" class="sub-checkbox option-checkbox" name="a20" value="1255142"><label for="a20_option_12" class="option-label">
-                                                        4+0
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_13" class="sub-checkbox option-checkbox" name="a20" value="38471"><label for="a20_option_13" class="option-label">
-                                                        4+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_14" class="sub-checkbox option-checkbox" name="a20" value="1227925"><label for="a20_option_14" class="option-label">
-                                                        4.5+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_15" class="sub-checkbox option-checkbox" name="a20" value="38485"><label for="a20_option_15" class="option-label">
-                                                        4+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_16" class="sub-checkbox option-checkbox" name="a20" value="217738"><label for="a20_option_16" class="option-label">
-                                                        4+3
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_17" class="sub-checkbox option-checkbox" name="a20" value="38502"><label for="a20_option_17" class="option-label">
-                                                        4+4
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_18" class="sub-checkbox option-checkbox" name="a20" value="38475"><label for="a20_option_18" class="option-label">
-                                                        5+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_19" class="sub-checkbox option-checkbox" name="a20" value="38479"><label for="a20_option_19" class="option-label">
-                                                        5+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_20" class="sub-checkbox option-checkbox" name="a20" value="38494"><label for="a20_option_20" class="option-label">
-                                                        5+3
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_21" class="sub-checkbox option-checkbox" name="a20" value="38497"><label for="a20_option_21" class="option-label">
-                                                        5+4
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_22" class="sub-checkbox option-checkbox" name="a20" value="38477"><label for="a20_option_22" class="option-label">
-                                                        6+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_23" class="sub-checkbox option-checkbox" name="a20" value="38480"><label for="a20_option_23" class="option-label">
-                                                        6+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_24" class="sub-checkbox option-checkbox" name="a20" value="38500"><label for="a20_option_24" class="option-label">
-                                                        6+3
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_25" class="sub-checkbox option-checkbox" name="a20" value="1256334"><label for="a20_option_25" class="option-label">
-                                                        6+4
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_26" class="sub-checkbox option-checkbox" name="a20" value="38478"><label for="a20_option_26" class="option-label">
-                                                        7+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_27" class="sub-checkbox option-checkbox" name="a20" value="38481"><label for="a20_option_27" class="option-label">
-                                                        7+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_28" class="sub-checkbox option-checkbox" name="a20" value="38490"><label for="a20_option_28" class="option-label">
-                                                        7+3
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_29" class="sub-checkbox option-checkbox" name="a20" value="38482"><label for="a20_option_29" class="option-label">
-                                                        8+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_30" class="sub-checkbox option-checkbox" name="a20" value="38483"><label for="a20_option_30" class="option-label">
-                                                        8+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_31" class="sub-checkbox option-checkbox" name="a20" value="1133410"><label for="a20_option_31" class="option-label">
-                                                        8+3
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_32" class="sub-checkbox option-checkbox" name="a20" value="38498"><label for="a20_option_32" class="option-label">
-                                                        8+4
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_33" class="sub-checkbox option-checkbox" name="a20" value="38491"><label for="a20_option_33" class="option-label">
-                                                        9+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_34" class="sub-checkbox option-checkbox" name="a20" value="38492"><label for="a20_option_34" class="option-label">
-                                                        9+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_35" class="sub-checkbox option-checkbox" name="a20" value="38493"><label for="a20_option_35" class="option-label">
-                                                        9+3
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_36" class="sub-checkbox option-checkbox" name="a20" value="38487"><label for="a20_option_36" class="option-label">
-                                                        9+4
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_37" class="sub-checkbox option-checkbox" name="a20" value="38488"><label for="a20_option_37" class="option-label">
-                                                        9+5
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_38" class="sub-checkbox option-checkbox" name="a20" value="38489"><label for="a20_option_38" class="option-label">
-                                                        9+6
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_39" class="sub-checkbox option-checkbox" name="a20" value="38501"><label for="a20_option_39" class="option-label">
-                                                        10+1
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_40" class="sub-checkbox option-checkbox" name="a20" value="38495"><label for="a20_option_40" class="option-label">
-                                                        10+2
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <input type="checkbox" id="a20_option_41" class="sub-checkbox option-checkbox" name="a20" value="38476"><label for="a20_option_41" class="option-label">
-                                                        10 Üzeri
-                                                    </label>
-                                                </li>
-                                            </ul>
+}
+
+
+@*<aside id="fh5co-hero" class="js-fullheight">
+        <div class="flexslider js-fullheight">
+            <ul class="slides">
+                @foreach (var item in slider)
+                {
+                    <li style="background-image: url(@item.image);">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-4 col-md-pull-4 js-fullheight slider-text">
+                                    <div class="slider-text-inner">
+                                        <div class="desc">
+                                            <span class="status">Kiralık</span>
+                                            <h1>@item.city - @item.county - @item.room - @item.metre</h1>
+                                            <h2 class="price">@item.price</h2>
+                                            <p>açıklama</p>
+                                            <p class="details">
+                                                <span>@item.price</span>
+                                                <span>@item.room</span>
+                                                <span>@item.age</span>
+                                                <span>@item.heating</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="button-holder">
-                                    <a href="javascript:;" class="btn search">Ara</a>
-                                    <a class="btn btn-alternative searchOnMap" href="javascript:;"><span class="mapSearchButton">Haritada Ara</span></a>
-                                </div>
-                            </div>
-                            <div class="menu-part clearfix" style="display: flex;">
-                                <a href="#" class="viewAllLightbox">Daha fazla seçenek göster</a>
                             </div>
                         </div>
+                    </li>
+                }
 
-                    </form>
+            </ul>
+        </div>
+    </aside>*@
 
-                </div>
+
+<div class="col-md-12" style="position: relative;margin-top: 50px;">
+
+    <div class="col-lg-4 col-xl-3" style="background-color: #00c14d; margin-top: 15px; border-radius: 10px; width: 315px;">
+        <div class="card">
+            <div class="card-header" style="margin-top: 10px; margin-bottom: -15px; text-align: center;">
+                <h5><i class="icofont icofont-filter m-r-5"></i>Filtre</h5>
+            </div>
+            <div class="card-block">
+                <form action="#">
+                    @*il*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ilsecim">
+                                <option value="0">İl Seçin</option>
+                                @foreach (var item in il)
+                                {
+                                    <option value="@item.ilId">@item.il1</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    @*ilçe*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ilcesecim">
+                            </select>
+                        </div>
+                    </div>
+
+                    @*mahalle*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="mahallesecim">
+                            </select>
+                        </div>
+                    </div>
+
+                    @*fiyat*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="number" id="minfiyat" class="form-control" placeholder="Min. Fiyat">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="number" id="maxfiyat" class="form-control" placeholder="Max. Fiyat">
+                        </div>
+                    </div>
+
+                    @*m2*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="number" id="minmk" class="form-control" placeholder="Min. m2">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="number" id="maxmk" class="form-control" placeholder="Max. m2">
+                        </div>
+                    </div>
+
+                    @*oda sayısı*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="odasecim">
+                                <option value="0">Tümü</option>
+                                <option value="Stüdyo">Stüdyo</option>
+                                <option value="1 Oda">1 Oda</option>
+                                <option value="1+1">1 + 1</option>
+                                <option value="2+1">2 + 1</option>
+                                <option value="2+2">2 + 2</option>
+                                <option value="3+1">3 + 1</option>
+                                <option value="3+2">3 + 2</option>
+                                <option value="4+1">4 + 1</option>
+                                <option value="4+2">4 + 2</option>
+                                <option value="4+3">4 + 3</option>
+                                <option value="4+4">4 + 4</option>
+                                <option value="5+1">5 + 1</option>
+                                <option value="5+2">5 + 2</option>
+                                <option value="5+3">5 + 3</option>
+                                <option value="5+4">5 + 4</option>
+                                <option value="6+1">6 + 1</option>
+                                <option value="6+2">6 + 2</option>
+                                <option value="6+2">6 + 2</option>
+                                <option value="7+1">7 + 1</option>
+                                <option value="7+2">7 + 2</option>
+                                <option value="7+3">7 + 3</option>
+                                <option value="8+1">8 + 1</option>
+                                <option value="8+2">8 + 2</option>
+                                <option value="8+3">8 + 3</option>
+                                <option value="9+1">9 + 1</option>
+                                <option value="9+2">9 + 2</option>
+                                <option value="9+3">9 + 3</option>
+                                <option value="10+1">10 + 1</option>
+                                <option value="10+2">10 + 2</option>
+                                <option value="10+3">10 + 3</option>
+                                <option value="1+0">1 + 0</option>
+                                <option value="2+0">2 + 0</option>
+                                <option value="3+0">3 + 0</option>
+                                <option value="4+0">4 + 0</option>
+                                <option value="5+0">5 + 0</option>
+                                <option value="6+0">6 + 0</option>
+                                <option value="7+0">7 + 0</option>
+                                <option value="8+0">8 + 0</option>
+                                <option value="9+0">9 + 0</option>
+                                <option value="10+0">10 + 0</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    @*bina yaş*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="yassecim">
+                                <option value="0">Tümü</option>
+                                <option value="100">Sıfır Bina</option>
+                                <option value="1">1-5</option>
+                                <option value="2">6-10</option>
+                                <option value="3">11-15</option>
+                                <option value="4">16-20</option>
+                                <option value="5">21 ve üzeri</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    @*bulunduğu kat*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="katsecim">
+                                <option value="0">Tümü</option>
+                                <option value="-4">Kot 4</option>
+                                <option value="-3">Kot 3</option>
+                                <option value="-2">Kot 2</option>
+                                <option value="-1">Kot 1</option>
+                                <option value="100">Bodrum Katı</option>
+                                <option value="101">Zemin Katı</option>
+                                <option value="102">Bahçe Katı</option>
+                                <option value="103">Giriş Katı</option>
+                                <option value="104">Yüksek Giriş</option>
+                                <option value="105">Müstakil</option>
+                                <option value="106">Villa</option>
+                                <option value="107">Çatı Katı</option>
+                                <option value="108">Asma Katı</option>
+                                <option value="109">En Üst Katı</option>
+                                <option value="110">Teras Katı</option>
+                                <option value="111">Ara Kat</option>
+                                <option value="112">Çatı Dublex</option>
+                                <option value="113">Düz Giriş</option>
+                                <option value="114">Bahçe Dublex</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    @*total kat*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="totalkatsecim">
+                                <option value="0">Tümü</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    @*ısınma*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="isinmasecim">
+                                <option value="0">Tümü</option>
+                                <option value="1">Doğalgaz Sobalı</option>
+                                <option value="2">Isıtma Yok</option>
+                                <option value="3">Klima</option>
+                                <option value="4">Kombi Doğalgaz</option>
+                                <option value="5">Merkezi (Pay Ölçer)</option>
+                                <option value="6">Merkezi Doğalgaz</option>
+                                <option value="7">Merkezi Kömür</option>
+                                <option value="8">Sobalı</option>
+                                <option value="9">Yerden Isıtma</option>
+                                <option value="10">Kat Kaloriferi</option>
+                                <option value="11">Güneş Enerjisi</option>
+                                <option value="12">Jeotermal</option>
+                                <option value="13">VRV</option>
+                                <option value="14">Isı Pompası</option>
+                                <option value="15">Kombi (Elektrikli)</option>
+                                <option value="16">Kalorifer (Akaryakıt)</option>
+                                <option value="17">Kalorifer (Kömür)</option>
+                                <option value="18">Kalorifer (Doğalgaz)</option>
+                                <option value="19">Fan-Coil</option>
+                                <option value="20">Şömine</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    @*banyo*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="banyosecim">
+                                <option value="0">Tümü</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    @*eşya*@
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="esyasecim">
+                                <option value="0">Tümü</option>
+                                <option value="1">Eşyalı</option>
+                                <option value="2">Eşyalı Değil</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center" style="margin-bottom: 10px;">
+                        <button type="button" id="evara" onclick="evarama();" class="btn btn-primary" style="background-color: #e70000;border-radius: 10px;">
+                            <i class="icofont icofont-job-search m-r-5"></i> Ev Ara
+                        </button>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
-    <div class="middle-container clearFlow custom-category-container">
-        <div class="middle-box">
-            <div class="uiInlineBox categoryContent emlakVitrin showcase-classifieds">
-                <div class="uiInlineBoxTitle">
-                    <a href="/arama/ara?viewType=Gallery&category=3613&category=vc%3ACategoryShowcase" title="Tüm vitrin ilanlarını göster">
-                        Tüm vitrin ilanlarını göster
-                    </a>
-                    <h3>Hepsi Emlak Örnek Vitrin</h3>
-                </div>
 
-                <div class="uiInlineBoxContent" id="categoryShowcase">
-                    <ul class="showCaseList showCaseSubCategory category-showcase-container">
-                        @foreach (var item in Model)
-                        {
-                            <li class="showCaseListItem showCaseSubCategoryListItem col4-1th col5-1th  col6-1th  col7-1th">
-                                <a href="@item.link" title="@item.link">
-                                    <img src="@item.image"
-                                         data-src="@item.image"
-                                         title="ACİL DOĞALGAZ+kombi"
-                                         alt="ACİL DOĞALGAZ+kombi"
-                                         border="0" class="gri_border lazyload" />
-                                    <span>@item.price</span>
-                                </a>
-                            </li>
-                        }
+    <div class="col-lg-1 col-xl-1"></div>
 
+    <div class="col-lg-6 col-xl-7">
+        <div class="card">
+            <div class="card-header" style="background-color: #00c14d;text-align: center;margin-top: 15px;border-radius: 10px;">
+                <h5 style="font-size: 22px;font-family: math;font-weight: bold;padding: 10px;">Kiralık Evler</h5>
+            </div>
+            <div class="card-block" id="evListe">
+                @foreach (var item in Model)
+                {
+                    <div class="job-cards">
+                        <div class="media" style="border-radius: 10px;background-color: white;">
+                            <a class="media-left media-middle" href="@item.link" target="_blank">
+                                <img class="media-object m-r-10 m-l-10" src="@item.image" alt="@item.city" style="width: 180px;height: 150px;margin-left: 25px;">
+                            </a>
+                            <div class="media-body">
+                                <div class="company-name m-b-10">
+                                    <p style="margin-top: 15px;">@item.city - @item.county - @item.room - @item.metre</p>
+                                    <i class="text-muted f-14"><span style="font-weight:600;">Fiyat: </span> @item.price</i>
+                                </div>
+                                <p class="text-muted">
+                                    <span style="font-weight:600;">Oda Sayısı : <span style="font-weight:100;"> @item.room</span></span>
+                                    <br />
+                                    <span style="font-weight:600;">Bina Yaşı :  <span style="font-weight:100;">@item.age</span></span>
+                                    <br />
+                                    <span style="font-weight:600;">Isıtma Tipi : <span style="font-weight:100;"> @item.heating</span></span>
+                                </p>
+                            </div>
+                            <div class="media-right" style=" vertical-align: middle;">
+                                <div class="label-main">
+                                    <button type="submit" onclick="sepeteekle('@item.ID','@item.city','@item.county','@item.room','@item.metre');" class="btn btn-primary" style="background-color: #e70000;border-radius: 10px;padding: 7px;font-size: 12px;text-transform: none;margin-right: 15px;">
+                                        Karşılaştır
+                                    </button>
 
-                    </ul>
-                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                }
+
             </div>
         </div>
-        <div class="middle-banner">
-            <div style="width:300px; height:auto; margin-bottom:15px;" id="div-gpt-ad-1585138965782-0">
 
-            </div>
-        </div>
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }))
+
     </div>
 
-    <div class="middle-container clearFlow custom-category-container">
-        <div class="middle-box">
-            <div class="uiInlineBox categoryContent emlakVitrin showcase-classifieds">
-                <div class="uiInlineBoxTitle">
-                    <a href="/arama/ara?viewType=Gallery&category=3613&category=vc%3ACategoryShowcase" title="Tüm vitrin ilanlarını göster">
-                        Tüm vitrin ilanlarını göster
-                    </a>
-                    <h3>Sahibinden Örnek Vitrin</h3>
-                </div>
-
-                <div class="uiInlineBoxContent" id="categoryShowcase">
-                    <ul class="showCaseList showCaseSubCategory category-showcase-container">
-                        @foreach (var item in ViewBag.sahibindenveri)
-                        {
-                            <li class="showCaseListItem showCaseSubCategoryListItem col4-1th col5-1th  col6-1th  col7-1th">
-                                <a href="@item.link" title="@item.link">
-                                    <img src="@item.image"
-                                         data-src="@item.image"
-                                         title="ACİL 4+1 DOĞALGAZ+kombi"
-                                         alt="ACİL 4+1 DOĞALGAZ+kombi"
-                                         border="0" class="gri_border lazyload" />
-                                    <span>@item.price</span>
-                                </a>
-                            </li>
-                        }
-
-
-                    </ul>
-                </div>
+    <div class="col-lg-2 col-xl-2">
+        <div class="card">
+            <div class="card-header" style="background-color: #00c14d;text-align: center;margin-top: 15px;border-radius: 10px;">
+                <h5 style="font-size: 22px;font-family: math;font-weight: bold;padding: 10px;">Karşılaştırma Alanı</h5>
             </div>
-        </div>
-        <div class="middle-banner">
-            <div style="width:300px; height:auto; margin-bottom:15px;" id="div-gpt-ad-1585138965782-0">
+            <div class="card job-right-header" style="background-color: white;border-radius: 10px;">
+
+                <div class="card-block" style="padding:15px;">
+                    <div id="karsilastirmaList">
+
+
+                    </div>
+
+                    <div class="media-right" style=" vertical-align: middle;">
+                        <div class="label-main">
+                            <button type="submit" onclick="evlerikarsilastir();" class="btn btn-primary" style="background-color: #e70000;border-radius: 10px;padding: 7px;font-size: 12px;text-transform: none;margin-top: 15px;">
+                                Evleri Karşılaştır
+                            </button>
+                            <button type="button" onclick="yenile();" class="btn btn-primary" style="background-color: #e70000;border-radius: 10px;padding: 7px;font-size: 12px;text-transform: none;margin-top: 15px;">
+                                Yenile
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
     </div>
 </div>
 
-    
-    

@@ -1,96 +1,126 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <title>Konut Fiyatları ve Emlak İlanları sahibinden.com'da</title>
-    <script type="text/javascript"
-            src="https://cdn-ukwest.onetrust.com/consent/9f768f58-cb4a-4de6-83e2-f8d83f22909b/OtAutoBlock.js" defer></script>
-    <script src="https://cdn-ukwest.onetrust.com/scripttemplates/otSDKStub.js" data-document-language="true"
-            type="text/javascript" charset="UTF-8" data-domain-script="9f768f58-cb4a-4de6-83e2-f8d83f22909b" defer></script>
+    <title>Konut Fiyatları ve Emlak İlanları</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Homestate &mdash; 100% Free Fully Responsive HTML5 Template by FREEHTML5.co</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+    <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+    <meta name="author" content="FREEHTML5.CO" />
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <meta id="Content-Language" http-equiv="Content-Language" content="tr" />
-    <meta name="rating" content="general" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta name="revisit-after" content="1 Days" />
-    <link rel="shortcut icon" href="https://www.sahibinden.com/favicon.ico" type="image/x-icon" />
-    <link rel="search" type="application/opensearchdescription+xml" title="sahibinden.com" href="https://www.sahibinden.com/static/opensearch" />
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
 
-    <link rel="alternate" hreflang="en" href="https://www.sahibinden.com/category/en/real-estate-residential" />
-    <meta name="description" content="Konut Fiyatları ve Emlak İlanları sahibinden.com'da" />
-    <meta name="keywords" content="Studyo 1 1+1 2+1 2+2 3+1 3+2 4+1 4+2 4+4 5 5+1 5+2 5+3 5+4 6+1 6+2 6+3 7+1 7+2 7+3 8+1 8+2 8+4 9+1 9+2 9+3 9+4 9+5 9+6 10+1 10+2 10 uzeri Yok 2 3 4 6 0 5-10 arasi 11-15 16-20 21-25 26-30 31 ve uzeri 7 8 9 Villa Tipi Bodrum Kat Zemin Giris Kati Yuksek cati 11 12 13 14 15 16 17 18 19 20 Soba Kalorifer Dogalgaz Kombi Yerden Isitma Klima Gunes Enerjisi ikinci El Sifir Evet Hayir Emlak Ofisi insaat Firmasi Sahibinden " />
-    <meta name="robots" content="NOODP,index,follow" />
-    <link rel="icon" href="https://www.sahibinden.com/favicon.ico" type="image/x-icon" />
-    <link rel="canonical" href="https://www.sahibinden.com/kategori/emlak-konut" />
-    <meta name="x-canonical-url" content="/kategori/emlak-konut" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico">
 
-    <meta property="al:ios:url" content="sahibinden://https://www.sahibinden.com/kategori/emlak-konut" />
-    <meta property="al:ios:app_store_id" content="418535251" />
-    <meta property="al:ios:app_name" content="sahibinden.com mobil" />
-    <meta property="al:android:url" content="sahibinden://https://www.sahibinden.com/kategori/emlak-konut" />
-    <meta property="al:android:package" content="com.sahibinden" />
-    <meta property="al:android:app_name" content="sahibinden.com" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,300' rel='stylesheet' type='text/css'>
 
-    
-    <!-- Real User Monitoring -->
-    <script>
-        var failedAssets = [];
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/animate.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/icomoon.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/bootstrap.css">
+    <!-- Superfish -->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/superfish.css">
+    <!-- Flexslider  -->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/flexslider.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/magnific-popup.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/bootstrap-datepicker.min.css">
+    <!-- CS Select -->
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/cs-select.css">
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/cs-skin-border.css">
 
-        window.addEventListener('error', function (event) {
-            if (event.target.tagName && event.target.tagName.toLowerCase() === 'img') {
-                failedAssets.push(event.target.src);
-            }
-        }, { capture: true }, true)
+    <link rel="stylesheet" href="~/Content/css/tasarimCss/style.css">
 
-        window.shbdn_rum = window.shbdn_rum || {};
-        window.shbdn_rum.requestType = "CATEGORY";
-    </script>
-    <!-- bundles -->
-    <!-- asset manager injected css [common] -->
-    <link href="https://s0.shbdn.com/assets/common:792f0be8a5899e70a6c6d7fe80386f04.css" media="screen, print" rel="stylesheet" type="text/css">
-    <!-- asset manager injected css [categoryPage] -->
-    <link href="https://s0.shbdn.com/assets/categoryPage:e2e61b03043b204e6e32d405d16a1d1c.css" media="screen, print" rel="stylesheet" type="text/css">
-    <!-- asset manager injected css [realEstateMain] -->
-    <link href="https://s0.shbdn.com/assets/realEstateMain:53618a4ad17ecd8f5fc6980d26cd6708.css" media="screen, print" rel="stylesheet" type="text/css">
-    <!-- bundles -->
-    
-    
 
-    
+    <!-- Modernizr JS -->
+    <script src="~/Content/js/tasarimJs/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+    <div id="fh5co-wrapper">
+        <div id="fh5co-page">
+            <header id="fh5co-header-section" class="sticky-banner">
+                <div class="container">
+                    <div class="nav-header">
+                        <a href="/Home/Index" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+                        <h1 id="fh5co-logo"><a href="/Home/Index"><i class="icon-home"></i>KÖSE <span>Emlak</span></a></h1>
+                        <!-- START #fh5co-menu-wrap -->
+                        <nav id="fh5co-menu-wrap" role="navigation">
+                            <ul class="sf-menu" id="fh5co-primary-menu">
+                                <li>@Html.ActionLink("Ana Sayfa", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Veri Güncelle", "Index", "Employment")</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+
+
+            @RenderBody()
+
+
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+
+            <br />
+            <br />
+
+            <footer>
+                <div id="footer">
+                    <div class="container">
+                        <p>&copy; @DateTime.Now.Year - Kiralık Evleri Karşılaştırma Projesi</p>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    <script src="~/Content/js/tasarimJs/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="~/Content/js/tasarimJs/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Content/js/tasarimJs/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="~/Content/js/tasarimJs/jquery.waypoints.min.js"></script>
+    <script src="~/Content/js/tasarimJs/sticky.js"></script>
+    <!-- Superfish -->
+    <script src="~/Content/js/tasarimJs/hoverIntent.js"></script>
+    <script src="~/Content/js/tasarimJs/superfish.js"></script>
+    <!-- Flexslider -->
+    <script src="~/Content/js/tasarimJs/jquery.flexslider-min.js"></script>
+    <!-- Date Picker -->
+    <script src="~/Content/js/tasarimJs/bootstrap-datepicker.min.js"></script>
+    <!-- CS Select -->
+    <script src="~/Content/js/tasarimJs/classie.js"></script>
+    <script src="~/Content/js/tasarimJs/selectFx.js"></script>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+
+    <!-- Main JS -->
+    <script src="~/Content/js/tasarimJs/main.js"></script>
+    <script src="~/Content/js/re.js"></script>
 </body>
 </html>
