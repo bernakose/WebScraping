@@ -112,11 +112,10 @@
 
 		});	
 
-	}
-
-	
+	}	
 
 	// Click outside of the Mobile Menu
+
 	var mobileMenuOutsideClick = function() {
 		$(document).click(function (e) {
 	    var container = $("#offcanvas-menu, .js-fh5co-nav-toggle");
@@ -127,7 +126,6 @@
 	    }
 		});
 	};
-
 
 	// Animations
 

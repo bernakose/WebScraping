@@ -15,8 +15,8 @@ namespace WebScraping.Controllers
 
         public ActionResult Index(int? page)
         {
-            var getHome = db.Homes.Where(a => !a.image.Contains("_nuxt")).Take(72).ToList();
-            var getHomeEmlakjet = db.HomesSahibinden.Where(a => !a.image.Contains("stati")).Take(120).ToList();
+            var getHome = db.Homes.Where(a => !a.image.Contains("_nuxt")).ToList();
+            var getHomeEmlakjet = db.HomesSahibinden.Where(a => !a.image.Contains("stati")).ToList();
 
             List<KiralikEvList> list = new List<KiralikEvList>();
 
@@ -68,8 +68,8 @@ namespace WebScraping.Controllers
 
 
             List<KiralikEvList> listSlider = new List<KiralikEvList>();
-            var getHomeSlider = db.Homes.Where(a => !a.image.Contains("_nuxt")).OrderBy(a => a.ID).Skip(10).Take(5).ToList();
-            var getHomeEmlakjetSlider = db.HomesSahibinden.Where(a => !a.image.Contains("stati")).OrderBy(a => a.ID).Skip(10).Take(5).ToList();
+            var getHomeSlider = db.Homes.Where(a => !a.image.Contains("_nuxt")).OrderBy(a => a.ID).Skip(72).ToList();
+            var getHomeEmlakjetSlider = db.HomesSahibinden.Where(a => !a.image.Contains("_nuxt")).OrderBy(a => a.ID).Skip(120).ToList();
 
             foreach (var item in getHomeSlider)
             {
@@ -120,11 +120,12 @@ namespace WebScraping.Controllers
             ViewBag.Slider = listSlider;
 
             var ilList = db.il.OrderBy(a => a.il1).ToList();
+            
+            ViewBag.il = ilList;
 
             int pageSize = 10;
             int pageNumber = (page ?? 1);
 
-            ViewBag.il = ilList;
             return View(list.ToPagedList(pageNumber, pageSize));
 
         }

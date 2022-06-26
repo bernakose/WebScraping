@@ -230,6 +230,8 @@
     <Content Include="Content\fonts\icomoon\icomoon\fonts\icomoon.svg" />
     <Content Include="Content\fonts\icomoon\icomoon\Read Me.txt" />
     <Content Include="Content\fonts\icomoon\icomoon\style.css" />
+    <Content Include="Content\images\evlogo.png" />
+    <Content Include="Content\images\evlogo2.jpg" />
     <Content Include="Content\js\re.js" />
     <Content Include="Content\js\tasarimJs\bootstrap-datepicker.min.js" />
     <Content Include="Content\js\tasarimJs\bootstrap.min.js" />
