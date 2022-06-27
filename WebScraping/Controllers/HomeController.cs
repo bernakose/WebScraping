@@ -13,10 +13,14 @@ namespace WebScraping.Controllers
     {
         WebScrapingDBEntities db = new WebScrapingDBEntities();
 
+        //Hepsiemlak ve emlakjetten çekilen verilerin anasayfada listelenmesi için sayfalama yapılır.
+        //Çekilen veriler her sayfada 10'ar tane veri olacak şekilde listeleniyor.
+        //Çekilen veri sayısı arttıkça sayfa sayısı da 1 den başlayarak ve artarak sayfalama yapılır.
+
         public ActionResult Index(int? page)
         {
-            var getHome = db.Homes.Where(a => !a.image.Contains("_nuxt")).ToList();
-            var getHomeEmlakjet = db.HomesSahibinden.Where(a => !a.image.Contains("stati")).ToList();
+            var getHome = db.Homes.Where(a => !a.image.Contains("width")).ToList();
+            var getHomeEmlakjet = db.HomesSahibinden.Where(a => !a.image.Contains(" ")).ToList();
 
             List<KiralikEvList> list = new List<KiralikEvList>();
 
@@ -66,10 +70,9 @@ namespace WebScraping.Controllers
                 });
             }
 
-
             List<KiralikEvList> listSlider = new List<KiralikEvList>();
-            var getHomeSlider = db.Homes.Where(a => !a.image.Contains("_nuxt")).OrderBy(a => a.ID).Skip(72).ToList();
-            var getHomeEmlakjetSlider = db.HomesSahibinden.Where(a => !a.image.Contains("_nuxt")).OrderBy(a => a.ID).Skip(120).ToList();
+            var getHomeSlider = db.Homes.Where(a => !a.image.Contains("width")).OrderBy(a => a.ID).Skip(76).ToList();
+            var getHomeEmlakjetSlider = db.HomesSahibinden.Where(a => !a.image.Contains(" ")).OrderBy(a => a.ID).Skip(120).ToList();
 
             foreach (var item in getHomeSlider)
             {
@@ -144,6 +147,7 @@ namespace WebScraping.Controllers
             return View();
         }
 
+        //Karşılaştırma yapmak için seçilen ev ilanlarının özelliklerinin karşılaştırılması yapılırken geriye JSON veri döndürür.
         public JsonResult Karsilastirma(string ev1, string ev2)
         {
             var evDetay1 = ev1.Split('-');
@@ -216,7 +220,6 @@ namespace WebScraping.Controllers
                 }
             }
 
-
             if (evDetayBilgileriSahibinden1 != null)
             {
                 homesahibinden = evDetayBilgileriSahibinden1;
@@ -253,8 +256,6 @@ namespace WebScraping.Controllers
                     homesahibinden = evDetayBilgileriSahibinden2;
                 }
             }
-
-
 
 
             TempData["homes"] = home;

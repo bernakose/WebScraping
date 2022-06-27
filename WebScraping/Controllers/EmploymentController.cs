@@ -17,8 +17,12 @@ namespace WebScraping.Controllers
         {
             List<Homes> homesAllDatas = new List<Homes>();
 
+            //Verileri okunulması istenilen web sitesinin url’ i string veri tipine dönüştürülür.
+            //Url içerisindeki Xpath alanları bulunarak o alanların htmlnode olarak gelmesi sağlanır.
+            //Node’ların içerisinde istenilen veriler bulunmaktadır. Bu şekilde veriler görüntülenebilir ve kaydedilebilir.
 
-            //hepsiemlaktan çekilen veriler
+            //hepsiemlaktan çekilen veriler buradan çekiliyor.
+
             List<Homes> homes = new List<Homes>();
             for (int i = 3; i < 36; i++)
             {
@@ -28,14 +32,14 @@ namespace WebScraping.Controllers
                 {
                     int price = 0;
 
-                    if (item.ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].ChildNodes[1].ChildNodes[0].InnerText=="GBP")
+                    if (item.ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].ChildNodes[1].ChildNodes[0].InnerText == "GBP")
                     {
                         price = Convert.ToInt32(item.ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].InnerText.Trim().Replace("GBP", "").TrimEnd().Replace(".", ""));
                     }
                     else
                     {
                         price = Convert.ToInt32(item.ChildNodes[2].ChildNodes[2].ChildNodes[0].ChildNodes[0].InnerText.Trim().Replace("TL", "").TrimEnd().Replace(".", ""));
-                    }                   
+                    }
                     string room = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
                     int metre = Convert.ToInt32(item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[4].ChildNodes[0].InnerText.Trim().Replace("m2", "").TrimEnd().Replace(".", "").Split(' ')[0]);
                     string link = "https://www.hepsiemlak.com" + item.ChildNodes[2].ChildNodes[0].ChildNodes[0].GetAttributeValue("href", "").Trim();
@@ -43,11 +47,11 @@ namespace WebScraping.Controllers
 
                     #region Floor
 
-                    
+
                     int floor = 0;
                     var floorDeger = item.ChildNodes[2].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].ChildNodes[2].ChildNodes[8].ChildNodes[0].InnerText.Trim();
                     var katDeger = floorDeger.Split('.')[0];
-                    
+
                     if (isInt(katDeger) == false)
                     {
                         floor = 0;
@@ -61,51 +65,6 @@ namespace WebScraping.Controllers
                         floor = 0;
                     }
 
-                    //if (floorDeger == "Kot 4")
-                    //    floor = -4;
-                    //else if (floorDeger == "Kot 3")
-                    //    floor = -3;
-                    //else if (floorDeger == "Kot 2")
-                    //    floor = -2;
-                    //else if (floorDeger == "Kot 1")
-                    //    floor = -1;
-                    //else if (floorDeger == "Bodrum Katı")
-                    //    floor = 100;
-                    //else if (floorDeger == "Zemin Katı")
-                    //    floor = 101;
-                    //else if (floorDeger == "Bahçe Katı")
-                    //    floor = 102;
-                    //else if (floorDeger == "Giriş Katı")
-                    //    floor = 103;
-                    //else if (floorDeger == "Yüksek Giriş")
-                    //    floor = 104;
-                    //else if (floorDeger == "Müstakil")
-                    //    floor = 105;
-                    //else if (floorDeger == "Villa")
-                    //    floor = 106;
-                    //else if (floorDeger == "Çatı Katı")
-                    //    floor = 107;
-                    //else if (floorDeger == "Asma Kat")
-                    //    floor = 108;
-                    //else if (floorDeger == "En Üst Kat")
-                    //    floor = 109;
-                    //else if (floorDeger == "Teras Katı")
-                    //    floor = 110;
-                    //else if (floorDeger == "Ara Kat")
-                    //    floor = 111;
-                    //else if (floorDeger == "Villa Katı")
-                    //    floor = 0;
-                    //else
-                    //{
-                    //    floor = 0;
-                    //    //if (floorDeger == "")
-                    //    //    floor = 0;
-                    //    //else
-                    //    //    if (floorDeger.Contains('.'))
-                    //    //    floor = Convert.ToInt32(floorDeger.Split('.')[0]);
-                    //    //else
-                    //    //    floor = Convert.ToInt32(floorDeger.Split(' ')[0]);
-                    //}
 
                     #endregion
 
@@ -125,10 +84,8 @@ namespace WebScraping.Controllers
 
                     var doc2 = web.Load(link);
 
-
                     foreach (var item2 in doc2.DocumentNode.SelectNodes("//div[@class='cont-inner']"))
                     {
-
                         var shortcut = item2.ChildNodes[0].ChildNodes[6].ChildNodes[2].ChildNodes[1];
                         var shortcut1 = item2.ChildNodes[0].ChildNodes[6].ChildNodes[2].ChildNodes[0];
                         string heating = "";
@@ -170,7 +127,6 @@ namespace WebScraping.Controllers
                                 bathroom = Convert.ToInt32(shortcut.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim().Split('+')[0]);
                             }
 
-
                             if (ana1 == "Isınma Tipi")
                             {
                                 heating = shortcut1.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim();
@@ -191,18 +147,12 @@ namespace WebScraping.Controllers
                             else if (ana1 == "Banyo Sayısı")
                             {
                                 bathroom = Convert.ToInt32(shortcut1.ChildNodes[j].ChildNodes[2].ChildNodes[0].InnerText.Trim().Split('+')[0]);
-        }
-
+                            }
                         }
 
                         string city = item2.ChildNodes[0].ChildNodes[4].ChildNodes[0].ChildNodes[0].ChildNodes[0].InnerText.Trim();
                         string county = item2.ChildNodes[0].ChildNodes[4].ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
                         string district = item2.ChildNodes[0].ChildNodes[4].ChildNodes[0].ChildNodes[4].ChildNodes[0].InnerText.Trim();
-                        //string totalFloor = shortcut.ChildNodes[0].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        //string heating = shortcut1.ChildNodes[8].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        //string isFurnished = shortcut.ChildNodes[1].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        //string formHousing = shortcut1.ChildNodes[3].ChildNodes[2].ChildNodes[0].InnerText.Trim();
-                        //string bathroom = shortcut.ChildNodes[2].ChildNodes[2].ChildNodes[0].InnerText.Trim();
 
                         homes.Add(new Homes()
                         {
@@ -227,7 +177,8 @@ namespace WebScraping.Controllers
                 }
             }
 
-            //Emlakjetten çekilen veriler
+            //Emlakjetten çekilen veriler buradan çekiliyor.
+
             List<HomesSahibinden> homesEmlakJet = new List<HomesSahibinden>();
             for (int i = 1; i < 20; i++)
             {
@@ -379,55 +330,7 @@ namespace WebScraping.Controllers
                                 {
                                     floor = 0;
                                 }
-                                //if (floorDeger == "Kot 4 (-4). Kat")
-                                //    floor = -4;
-                                //else if (floorDeger == "Kot 3 (-3). Kat")
-                                //    floor = -3;
-                                //else if (floorDeger == "Kot 2 (-2). Kat")
-                                //    floor = -2;
-                                //else if (floorDeger == "Kot 1 (-1). Kat")
-                                //    floor = -1;
-                                //else if (floorDeger == "Bodrum Katı")
-                                //    floor = 100;
-                                //else if (floorDeger == "Zemin Katı")
-                                //    floor = 101;
-                                //else if (floorDeger == "Bahçe Katı")
-                                //    floor = 102;
-                                //else if (floorDeger == "Giriş Katı")
-                                //    floor = 103;
-                                //else if (floorDeger == "Yüksek Giriş")
-                                //    floor = 104;
-                                //else if (floorDeger == "Müstakil")
-                                //    floor = 105;
-                                //else if (floorDeger == "Villa Tipi")
-                                //    floor = 106;
-                                //else if (floorDeger == "Çatı Katı")
-                                //    floor = 107;
-                                //else if (floorDeger == "Asma Kat")
-                                //    floor = 108;
-                                //else if (floorDeger == "En Üst Kat")
-                                //    floor = 109;
-                                //else if (floorDeger == "Teras Katı")
-                                //    floor = 110;
-                                //else if (floorDeger == "Ara Kat")
-                                //    floor = 111;
-                                //else if (floorDeger == "Çatı Dubleks")
-                                //    floor = 112;
-                                //else if (floorDeger == "Düz Giriş")
-                                //    floor = 113;
-                                //else if (floorDeger == "Bahçe Dublex")
-                                //    floor = 114;
-                                //else
-                                //{
-                                //    floor = 0;
-                                //    //if (floorDeger == "")
-                                //    //    floor = 0;
-                                //    //else
-                                //    //    if (floorDeger.Contains('.'))
-                                //    //    floor = Convert.ToInt32(floorDeger.Split('.')[0]);
-                                //    //else
-                                //    //    floor = Convert.ToInt32(floorDeger.Split(' ')[0]);
-                                //}
+
 
                                 #endregion
                             }
@@ -456,16 +359,16 @@ namespace WebScraping.Controllers
                 }
             }
 
-            //veritabanına kayıt işlemleri
+            //Veritabanına kayıt işlemleri
 
-            //önce eski kayıtlar silinir
+            //Önce eski kayıtlar silinir
             var getHome = db.Homes.ToList();
             var getHomeSahibinden = db.HomesSahibinden.ToList();
 
             db.Homes.RemoveRange(getHome);
             db.HomesSahibinden.RemoveRange(getHomeSahibinden);
 
-            //sonra yeni kayıtlar eklenir.
+            //Sonra yeni kayıtlar eklenir.
             db.Homes.AddRange(homes);
             db.HomesSahibinden.AddRange(homesEmlakJet);
             if (db.SaveChanges() > 0)
@@ -476,19 +379,21 @@ namespace WebScraping.Controllers
             {
                 return View();
             }
-            
+
             //homesAllDatas.AddRange(homes);
             //homesAllDatas.AddRange(homesSahibinden);
 
             return View(homesAllDatas);
         }
 
+        //Burada kullanılan JSON metodu ile il bazında filtreleme yapıldığında seçilen ilin ilçelerinin listelenmesi sağlanıyor.
         public JsonResult Il(long ilId)
         {
             var ilce = db.ilce.Where(a => a.ilId == ilId).OrderBy(a => a.ilce1).ToList();
 
             return Json(ilce, JsonRequestBehavior.AllowGet);
         }
+        //Burada kullanılan JSON metodu ile ilçe bazında filtreleme yapıldığında seçilen ilçenin mahallelerinin listelenmesi sağlanıyor.
         public JsonResult Ilce(long ilceId)
         {
             var mahalle = db.mahalle.Where(a => a.ilceId == ilceId).OrderBy(a => a.mahalle1).ToList();
@@ -496,6 +401,7 @@ namespace WebScraping.Controllers
             return Json(mahalle, JsonRequestBehavior.AllowGet);
         }
 
+        //Post metodu ile istenilen ev özellerinin bulunduğu ilanlar filtreleme işleminden sonra getirilir. 
         [HttpPost]
         public JsonResult EvAra(string il, string ilce, string mahalle, string minfiyat,
             string maxfiyat, string minmk, string maxmk, string oda,
@@ -638,11 +544,11 @@ namespace WebScraping.Controllers
             return Json(totalList, JsonRequestBehavior.AllowGet);
         }
 
-
+        //Karşılaştır butonuna basıldığında seçilen iki ilanın özelliklerinin karşılaştırılması yapılır.
         public ActionResult Karsilastir()
         {
-             ViewBag.Homes = TempData["homes"] as Homes;
-             ViewBag.HomesSahibinden = TempData["homessahibinden"] as HomesSahibinden;
+            ViewBag.Homes = TempData["homes"] as Homes;
+            ViewBag.HomesSahibinden = TempData["homessahibinden"] as HomesSahibinden;
 
             var ilList = db.il.OrderBy(a => a.il1).ToList();
 
@@ -651,6 +557,7 @@ namespace WebScraping.Controllers
             return View("Karsilastir");
         }
 
+        //Gelen değerin integer değeri olup olmadığının kontrolünü yapar. Bu metoda price verilerini çekerken ihtiyacımız oldu. 
         bool isInt(string deger)
         {
             try

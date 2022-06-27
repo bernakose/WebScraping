@@ -204,6 +204,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WebScrapingDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Siniflar\WebScrapingDB1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebScrapingDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
